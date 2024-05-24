@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>menuPage</class>
+ <widget class="QWidget" name="menuPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1058</width>
+    <height>735</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1058</width>
+    <height>735</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1058</width>
+    <height>735</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Infant Pose Visualizer</string>
+  </property>
+  <widget class="QWidget" name="actionWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>259</x>
+     <y>180</y>
+     <width>521</width>
+     <height>371</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color : rgb(0, 170, 255)</string>
+   </property>
+   <widget class="QLabel" name="actionLabel">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>40</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-weight: bold; color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Please Select an Action</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>130</y>
+      <width>317</width>
+      <height>165</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="loginFormLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
+     <property name="horizontalSpacing">
+      <number>42</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>35</number>
+     </property>
+     <item row="1" column="0" colspan="2">
+      <widget class="QPushButton" name="viewButton">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
+       </property>
+       <property name="text">
+        <string>View Pose Estimation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QPushButton" name="registerButton">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
+       </property>
+       <property name="text">
+        <string>Register a Patient</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QPushButton" name="historyBustton">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
+       </property>
+       <property name="text">
+        <string>View Historical Data</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QCommandLinkButton" name="guideButton">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>670</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quick Guide</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
