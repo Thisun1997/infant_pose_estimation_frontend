@@ -17,13 +17,15 @@ from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
 from components.matplotlib_canvas import MatplotlibCanvas
 from components.top_bar import TopBar
-from utils.common_utils import fetch_data
+from pose_visualization_page import PoseVisualizationPage
+from utils.common_utils import fetch_data, get_prediction
 
 
 class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
     def __init__(self, parent, registration_id):
         super(ImageUploadPage, self).__init__(parent)
-        self.images={}
+        self.images = {}
+        self.input_validation_errors = []
         self.setupUi(registration_id)
 
     def setupUi(self, registration_id):
@@ -191,7 +193,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.pressureUploadButton.clicked.connect(lambda: self.upload_file_and_display("pressure"))
         self.uploadButton.clicked.connect(lambda: self.process_images(registration_id))
 
-
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("imageUploadPage", "Dialog"))
@@ -207,26 +208,35 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.idLabel.setText(_translate("imageUploadPage", "Registration ID"))
 
     def upload_file_and_display(self, modality):
+        if len(self.input_validation_errors) == 0:
+            self.displayErrorMessage(False)
         try:
             options = QtWidgets.QFileDialog.Options()
             options |= QtWidgets.QFileDialog.ReadOnly
             fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
-                                                      "NumPy Files (*.npy)", options=options)
+                                                                "NumPy Files (*.npy)", options=options)
             if fileName:
                 np_array = np.load(fileName)
                 if modality == "depth":
                     self.depthFileLineEdit.setText(fileName)
                     self.depthCanvas.axes.clear()
+                    if np_array.dtype != np.uint16:
+                        self.handle_image_input_validation(modality)
+                        return
                     self.depthCanvas.axes.imshow(np_array)
                     self.depthCanvas.draw()
                 elif modality == "pressure":
                     self.pressureFileLineEdit.setText(fileName)
                     self.pressureCanvas.axes.clear()
+                    if np_array.dtype != np.float32:
+                        self.handle_image_input_validation(modality)
+                        return
                     self.pressureCanvas.axes.imshow(np_array)
                     self.pressureCanvas.draw()
                 self.images[modality] = np_array
+                self.handle_image_input_validation(modality, True)
         except Exception as e:
-            self.displayErrorMessage(True, "Error occurred: "+str(e))
+            self.displayErrorMessage(True, "Error occurred: " + str(e))
 
     def setValues(self, registration_id):
         try:
@@ -234,17 +244,46 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.idLineEdit.setText(str(registration_id))
             self.nameLineEdit.setText(data["patient_name"])
         except Exception as e:
-            self.displayErrorMessage(True, "Error fetching data: "+str(e))
+            self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
     def process_images(self, registration_id):
-        data = {
-            "patient_id" : registration_id,
-            "depth": None,
-            "pressure" : None,
-            "time": time.time_ns()
-        }
-        for modality in self.images:
-            data[modality] = self.images[modality].tolist()
-        response = self.handlePostRequest("patients/prediction", data, True)
-        print(response)
+        if len(self.input_validation_errors) == 0:
+            self.displayErrorMessage(False)
+            now_time = time.time_ns()
+            data = {
+                "patient_id": registration_id,
+                "depth": None,
+                "pressure": None,
+                "time": now_time
+            }
+            if len(self.images) != 2:
+                self.displayErrorMessage(True, "Inputs marked with * are required")
+            else:
+                for modality in self.images:
+                    data[modality] = self.images[modality].tolist()
+                response = get_prediction("patients/prediction", data)
+                if type(response) is str:
+                    self.displayErrorMessage(True, response)
+                else:
+                    self.stack_pose_visualization_page(registration_id, now_time, response)
 
+    def stack_pose_visualization_page(self, registration_id, now_time, response):
+        pose_visualization_page = PoseVisualizationPage(self.parent, registration_id, now_time, response)
+        self.parent.addWidget(pose_visualization_page)
+        self.parent.setCurrentIndex(self.parent.currentIndex() + 1)
+
+    def handle_image_input_validation(self, modality, remove_message=False):
+        modality_in_list = len([s for s in self.input_validation_errors if modality in s]) != 0
+        error_message = modality + " image is not in accepted format."
+        if remove_message:
+            if modality_in_list:
+                self.input_validation_errors.remove(error_message)
+            else:
+                return
+        else:
+            if not modality_in_list:
+                self.input_validation_errors.append(error_message)
+        if len(self.input_validation_errors) == 0:
+            self.displayErrorMessage(False)
+        else:
+            self.displayErrorMessage(True, " ".join(self.input_validation_errors))

@@ -12,6 +12,7 @@ import time
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QRect
+from PyQt5.QtGui import QIntValidator
 
 from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
@@ -102,6 +103,8 @@ class PatientAdmissionPage(DialogWithGuide, HandleErrorMessage):
         self.bedLineEdit.setFont(font)
         self.bedLineEdit.setStyleSheet("color:#757575")
         self.bedLineEdit.setObjectName("bedLineEdit")
+        int_validator = QIntValidator(self)
+        self.bedLineEdit.setValidator(int_validator)
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.bedLineEdit)
         self.nameLineEdit = QtWidgets.QLineEdit(self.formLayoutWidget)
         self.nameLineEdit.setEnabled(False)

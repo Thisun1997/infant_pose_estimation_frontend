@@ -35,3 +35,15 @@ def fetch_data(path, data):
             "code": 500,
             "message": "Internal Error: " + str(e)
         })
+
+
+def get_prediction(path, data):
+    try:
+        response = requests.get(base_url + path, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+        if response.status_code == 200:
+            img_data = response.content
+            return img_data
+        else:
+            return f"Error: {response.status_code}"
+    except Exception as e:
+        return f'Error: {str(e)}'
