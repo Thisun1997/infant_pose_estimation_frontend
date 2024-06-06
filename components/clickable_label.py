@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import pyqtSignal, Qt
 
@@ -7,6 +8,7 @@ class ClickableLabel(QLabel):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setCursor(QCursor(Qt.PointingHandCursor))
 
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:

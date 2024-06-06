@@ -126,7 +126,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         font.setPointSize(12)
         self.visualizationLabel.setFont(font)
         self.visualizationLabel.setStyleSheet("color:#757575")
-        self.visualizationLabel.setObjectName("visualizationLabel")
+        self.visualizationLabel.setObjectName("remarkLabel")
         self.feedbackLinkLabel = ClickableLabel(self)
         self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 610, 231, 21))
         font = QtGui.QFont()
@@ -143,7 +143,6 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         self.topBar.loginButton.clicked.connect(self.gotoHome)
         self.topBar.menuButton.clicked.connect(self.goToMenu)
         self.saveButton.clicked.connect(lambda: self.save(registration_id, now_time))
-        # self.feedbackLinkLabel.clicked.connect()
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

@@ -138,9 +138,14 @@ class LoginPage(QtWidgets.QDialog, HandleErrorMessage):
             self.stack_menu_page()
 
     def label_clicked(self):
-        self.parent.setCurrentIndex(self.parent.currentIndex()-1)
+        self.parent.setCurrentIndex(0)
 
     def stack_menu_page(self):
         menuPage = MenuPage(self.parent)
         self.parent.addWidget(menuPage)
-        self.parent.setCurrentIndex(self.parent.currentIndex()+1)
+        # self.parent.setCurrentIndex(self.parent.currentIndex()+1)
+        for i in range(self.parent.count()):
+            widget = self.parent.widget(i)
+            if widget.objectName() == "menuPage":
+                self.parent.setCurrentIndex(i)
+                break

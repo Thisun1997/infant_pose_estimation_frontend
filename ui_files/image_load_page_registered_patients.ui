@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>poseVisualizationPage</class>
- <widget class="QDialog" name="poseVisualizationPage">
+ <class>patientRegistrationPage</class>
+ <widget class="QDialog" name="patientRegistrationPage">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -12,9 +12,6 @@
     <width>1058</width>
     <height>720</height>
    </rect>
-  </property>
-  <property name="cursor">
-   <cursorShape>PointingHandCursor</cursorShape>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -136,14 +133,14 @@
     <string notr="true">color:rgb(0, 170, 255); font-weight:bold</string>
    </property>
    <property name="text">
-    <string>Pose visualization</string>
+    <string>Upload Images</string>
    </property>
   </widget>
   <widget class="QPushButton" name="uploadButton">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>500</y>
+     <x>40</x>
+     <y>640</y>
      <width>111</width>
      <height>41</height>
     </rect>
@@ -157,51 +154,45 @@
     <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>Process</string>
    </property>
   </widget>
-  <widget class="QWidget" name="gridLayoutWidget_2">
+  <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>40</x>
      <y>170</y>
-     <width>941</width>
-     <height>41</height>
+     <width>201</width>
+     <height>21</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="5">
-     <widget class="QLineEdit" name="nameLineEdit_2">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="idLineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="idLabel">
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>All inputs are required</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>240</y>
+     <width>941</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="horizontalSpacing">
+     <number>17</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>6</number>
+    </property>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="pressureUploadButton">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -211,12 +202,39 @@
        <string notr="true">color:#757575</string>
       </property>
       <property name="text">
-       <string>Registration Id</string>
+       <string>Upload</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QLineEdit" name="nameLineEdit">
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="pressureFileLineEdit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="pressureLabel">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Pressure image</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="depthFileLineEdit">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -228,7 +246,7 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QLabel" name="nameLabel">
+     <widget class="QPushButton" name="depthUploadButton">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -238,12 +256,12 @@
        <string notr="true">color:#757575</string>
       </property>
       <property name="text">
-       <string>Name</string>
+       <string>Upload</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="nameLabel_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="depthLabel">
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -253,115 +271,167 @@
        <string notr="true">color:#757575</string>
       </property>
       <property name="text">
-       <string>Time</string>
+       <string>Depth image</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>269</y>
-     <width>400</width>
-     <height>361</height>
+     <y>320</y>
+     <width>941</width>
+     <height>41</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>400</width>
-     <height>361</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>400</width>
-     <height>361</height>
-    </size>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QHBoxLayout" name="labelLayout">
+    <item>
+     <widget class="QLabel" name="depthLabel_2">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Depth image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="pressureLabel_2">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Pressure image</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>270</y>
-     <width>501</width>
-     <height>211</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="nameLabel_3">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>230</y>
-     <width>131</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:#757575</string>
-   </property>
-   <property name="text">
-    <string>Medical remarks</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>610</y>
-     <width>231</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(0, 170, 255)</string>
-   </property>
-   <property name="text">
-    <string>&lt;i&gt;&lt;u&gt;Provide feedback on this prediction&lt;/u&gt;&lt;/i&gt;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="nameLabel_4">
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>230</y>
-     <width>131</width>
-     <height>25</height>
+     <y>360</y>
+     <width>941</width>
+     <height>281</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="minimumSize">
+       <size>
+        <width>467</width>
+        <height>279</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>467</width>
+        <height>279</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Depth image</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="minimumSize">
+       <size>
+        <width>466</width>
+        <height>279</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>466</width>
+        <height>279</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Pressure Image</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>200</y>
+     <width>941</width>
+     <height>41</height>
+    </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">color:#757575</string>
-   </property>
-   <property name="text">
-    <string>Visualization</string>
-   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="idLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>115</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#757575</string>
+      </property>
+      <property name="text">
+       <string>Select Patient</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="comboBox"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <customwidgets>

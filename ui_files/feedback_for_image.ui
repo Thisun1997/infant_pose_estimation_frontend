@@ -136,14 +136,14 @@
     <string notr="true">color:rgb(0, 170, 255); font-weight:bold</string>
    </property>
    <property name="text">
-    <string>Pose visualization</string>
+    <string>Provide Feedback</string>
    </property>
   </widget>
   <widget class="QPushButton" name="uploadButton">
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>500</y>
+     <y>590</y>
      <width>111</width>
      <height>41</height>
     </rect>
@@ -157,7 +157,7 @@
     <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>Submit</string>
    </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
@@ -288,9 +288,9 @@
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>270</y>
+     <y>300</y>
      <width>501</width>
-     <height>211</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="alignment">
@@ -314,32 +314,11 @@
    <property name="styleSheet">
     <string notr="true">color:#757575</string>
    </property>
-   <property name="text">
-    <string>Medical remarks</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>480</x>
-     <y>610</y>
-     <width>231</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color:rgb(0, 170, 255)</string>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
    </property>
    <property name="text">
-    <string>&lt;i&gt;&lt;u&gt;Provide feedback on this prediction&lt;/u&gt;&lt;/i&gt;</string>
+    <string>Feedback</string>
    </property>
   </widget>
   <widget class="QLabel" name="nameLabel_4">
@@ -361,6 +340,51 @@
    </property>
    <property name="text">
     <string>Visualization</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nameLabel_5">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>260</y>
+     <width>491</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:#757575</string>
+   </property>
+   <property name="text">
+    <string>You can provide any shortcomings, anomalies, etc. you observe in the current pose estimation here.</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>590</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)</string>
+   </property>
+   <property name="text">
+    <string>Back</string>
    </property>
   </widget>
  </widget>

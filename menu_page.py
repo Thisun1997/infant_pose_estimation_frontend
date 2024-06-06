@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from components.dialog_with_guide import DialogWithGuide
 from components.top_bar import TopBar
+from image_load_page import ImageUploadPage
 from patient_registration_page import PatientRegistrationPage
 
 
@@ -81,7 +82,7 @@ class MenuPage(DialogWithGuide):
 
         self.topBar.loginButton.clicked.connect(self.gotoHome)
         self.registerButton.clicked.connect(self.gotoPatientRegistration)
-        # self.viewButton.clicked.connect(self.gotoView)
+        self.viewButton.clicked.connect(self.gotoView)
         # self.historyButton.clicked.connect(self.gotoHistory)
 
     def retranslateUi(self):
@@ -98,4 +99,9 @@ class MenuPage(DialogWithGuide):
     def gotoPatientRegistration(self):
         patient_registration = PatientRegistrationPage(self.parent)
         self.parent.addWidget(patient_registration)
+        self.parent.setCurrentIndex(self.parent.count()-1)
+
+    def gotoView(self):
+        image_upload_page = ImageUploadPage(self.parent)
+        self.parent.addWidget(image_upload_page)
         self.parent.setCurrentIndex(self.parent.count()-1)

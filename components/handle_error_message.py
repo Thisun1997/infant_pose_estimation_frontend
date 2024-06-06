@@ -53,6 +53,14 @@ class HandleErrorMessage:
                 self.horizontalLayoutWidget.setGeometry(QtCore.QRect(40, 320, 941, 41))
                 self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(40, 360, 941, 281))
                 self.gridLayoutWidget_2.setGeometry(QRect(40, 200, 941, 41))
+            elif self.objectName() == "poseVisualizationPage":
+                self.saveButton.setGeometry(QtCore.QRect(480, 540, 111, 41))
+                self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 210, 941, 41))
+                self.imageLabel.setGeometry(QtCore.QRect(40, 309, 400, 361))
+                self.lineEdit.setGeometry(QtCore.QRect(480, 310, 501, 211))
+                self.remarkLabel.setGeometry(QtCore.QRect(480, 270, 131, 25))
+                self.visualizationLabel.setGeometry(QtCore.QRect(40, 270, 131, 25))
+                self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 650, 231, 21))
 
         else:
             self.error.setHidden(True)
@@ -70,6 +78,19 @@ class HandleErrorMessage:
                 self.horizontalLayoutWidget.setGeometry(QtCore.QRect(40, 280, 941, 41))
                 self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(40, 320, 941, 281))
                 self.gridLayoutWidget_2.setGeometry(QRect(40, 160, 941, 41))
+            elif self.objectName() == "poseVisualizationPage":
+                self.saveButton.setGeometry(QtCore.QRect(480, 500, 111, 41))
+                self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 170, 941, 41))
+                self.imageLabel.setGeometry(QtCore.QRect(40, 269, 400, 361))
+                self.lineEdit.setGeometry(QtCore.QRect(480, 270, 501, 211))
+                self.remarkLabel.setGeometry(QtCore.QRect(480, 230, 131, 25))
+                self.visualizationLabel.setGeometry(QtCore.QRect(40, 230, 131, 25))
+                self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 610, 231, 21))
+
+
+
+
+
 
     def gotoHome(self):
         self.parent.setCurrentIndex(0)
@@ -80,3 +101,18 @@ class HandleErrorMessage:
             if widget.objectName() == "menuPage":
                 self.parent.setCurrentIndex(i)
                 break
+
+    def handlePutRequest(self, path, query_data, new_field):
+        if not has_empty_or_null_value(query_data):
+            self.displayErrorMessage(False)
+            self.error.setHidden(True)
+            data = {
+                "query": query_data,
+                "new_field": new_field
+            }
+            response = sendPostRequest(path, data, "PUT")
+            if response["code"] == 200:
+                self.error.setStyleSheet(u"color: rgb(0, 234, 0)")
+            self.displayErrorMessage(True, response["message"])
+        else:
+            self.displayErrorMessage(True, "Inputs marked with * are required")

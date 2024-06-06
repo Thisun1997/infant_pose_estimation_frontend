@@ -22,13 +22,14 @@ from utils.common_utils import fetch_data, get_prediction
 
 
 class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
-    def __init__(self, parent, registration_id):
+    def __init__(self, parent, registration_id=None):
         super(ImageUploadPage, self).__init__(parent)
+        self.registration_id = registration_id
         self.images = {}
         self.input_validation_errors = []
-        self.setupUi(registration_id)
+        self.setupUi()
 
-    def setupUi(self, registration_id):
+    def setupUi(self):
         self.setObjectName("imageUploadPage")
         self.resize(1058, 735)
         self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
@@ -48,6 +49,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.uploadButton.setFont(font)
         self.uploadButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
         self.uploadButton.setObjectName("uploadButton")
+        self.uploadButton.setDisabled(True)
         self.gridLayoutWidget = QtWidgets.QWidget(self)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 200, 941, 81))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
@@ -152,46 +154,67 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.idLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
-        self.idLineEdit.setObjectName(u"idLineEdit")
-        self.idLineEdit.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.idLineEdit.sizePolicy().hasHeightForWidth())
-        self.idLineEdit.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.idLineEdit.setFont(font)
-        self.gridLayout_2.addWidget(self.idLineEdit, 0, 1, 1, 1)
-        self.idLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        self.idLabel.setObjectName(u"idLabel")
-        self.idLabel.setFont(font)
-        self.idLabel.setStyleSheet(u"color:#757575")
-        self.gridLayout_2.addWidget(self.idLabel, 0, 0, 1, 1)
-        self.nameLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
-        self.nameLineEdit.setObjectName(u"nameLineEdit")
-        self.nameLineEdit.setEnabled(False)
-        self.nameLineEdit.setFont(font)
-        self.gridLayout_2.addWidget(self.nameLineEdit, 0, 3, 1, 1)
-        self.nameLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        self.nameLabel.setObjectName(u"nameLabel")
-        self.nameLabel.setFont(font)
-        self.nameLabel.setStyleSheet(u"color:#757575")
-
-        self.gridLayout_2.addWidget(self.nameLabel, 0, 2, 1, 1)
+        if self.registration_id:
+            self.idLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
+            self.idLineEdit.setObjectName(u"idLineEdit")
+            self.idLineEdit.setEnabled(False)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.idLineEdit.sizePolicy().hasHeightForWidth())
+            self.idLineEdit.setSizePolicy(sizePolicy)
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            self.idLineEdit.setFont(font)
+            self.gridLayout_2.addWidget(self.idLineEdit, 0, 1, 1, 1)
+            self.idLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
+            self.idLabel.setObjectName(u"idLabel")
+            self.idLabel.setFont(font)
+            self.idLabel.setStyleSheet(u"color:#757575")
+            self.gridLayout_2.addWidget(self.idLabel, 0, 0, 1, 1)
+            self.nameLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
+            self.nameLineEdit.setObjectName(u"nameLineEdit")
+            self.nameLineEdit.setEnabled(False)
+            self.nameLineEdit.setFont(font)
+            self.gridLayout_2.addWidget(self.nameLineEdit, 0, 3, 1, 1)
+            self.nameLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
+            self.nameLabel.setObjectName(u"nameLabel")
+            self.nameLabel.setFont(font)
+            self.nameLabel.setStyleSheet(u"color:#757575")
+            self.gridLayout_2.addWidget(self.nameLabel, 0, 2, 1, 1)
+        else:
+            self.setObjectName("imageUploadPage")
+            self.selectPatientLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
+            self.selectPatientLabel.setObjectName(u"idLabel")
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.selectPatientLabel.sizePolicy().hasHeightForWidth())
+            self.selectPatientLabel.setSizePolicy(sizePolicy)
+            self.selectPatientLabel.setMinimumSize(QtCore.QSize(115, 0))
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            self.selectPatientLabel.setFont(font)
+            self.selectPatientLabel.setStyleSheet(u"color:#757575")
+            self.gridLayout_2.addWidget(self.selectPatientLabel, 0, 0, 1, 1)
+            self.comboBox = QtWidgets.QComboBox(self.gridLayoutWidget_2)
+            self.comboBox.setObjectName("comboBox")
+            self.comboBox.setFont(font)
+            self.comboBox.setStyleSheet(u"color:#757575")
+            self.comboBox.currentIndexChanged.connect(self.selection_changed)
+            self.gridLayout_2.addWidget(self.comboBox, 0, 1, 1, 1)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
-        self.setValues(registration_id)
+        self.setValues()
         self.addErrorLabel(QRect(40, 170, 201, 21), self)
         self.topBar.loginButton.clicked.connect(self.gotoHome)
         self.topBar.menuButton.clicked.connect(self.goToMenu)
 
         self.depthUploadButton.clicked.connect(lambda: self.upload_file_and_display("depth"))
         self.pressureUploadButton.clicked.connect(lambda: self.upload_file_and_display("pressure"))
-        self.uploadButton.clicked.connect(lambda: self.process_images(registration_id))
+        self.uploadButton.clicked.connect(lambda: self.process_images())
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -204,12 +227,13 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.depthLabel.setText(_translate("imageUploadPage", "Depth image<sup>*</sup>"))
         self.depthLabel_2.setText(_translate("imageUploadPage", "Depth image"))
         self.pressureLabel_2.setText(_translate("imageUploadPage", "Pressure image"))
-        self.nameLabel.setText(_translate("imageUploadPage", "Name"))
-        self.idLabel.setText(_translate("imageUploadPage", "Registration ID"))
+        if self.registration_id:
+            self.nameLabel.setText(_translate("imageUploadPage", "Name"))
+            self.idLabel.setText(_translate("imageUploadPage", "Registration ID"))
+        else:
+            self.selectPatientLabel.setText(_translate("imageUploadPage", "Select Patient"))
 
     def upload_file_and_display(self, modality):
-        if len(self.input_validation_errors) == 0:
-            self.displayErrorMessage(False)
         try:
             options = QtWidgets.QFileDialog.Options()
             options |= QtWidgets.QFileDialog.ReadOnly
@@ -220,6 +244,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
                 if modality == "depth":
                     self.depthFileLineEdit.setText(fileName)
                     self.depthCanvas.axes.clear()
+                    self.depthCanvas.draw_idle()
                     if np_array.dtype != np.uint16:
                         self.handle_image_input_validation(modality)
                         return
@@ -228,6 +253,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
                 elif modality == "pressure":
                     self.pressureFileLineEdit.setText(fileName)
                     self.pressureCanvas.axes.clear()
+                    self.pressureCanvas.draw_idle()
                     if np_array.dtype != np.float32:
                         self.handle_image_input_validation(modality)
                         return
@@ -238,20 +264,25 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         except Exception as e:
             self.displayErrorMessage(True, "Error occurred: " + str(e))
 
-    def setValues(self, registration_id):
+    def setValues(self):
         try:
-            data = fetch_data("patients/data", {"_id": registration_id})
-            self.idLineEdit.setText(str(registration_id))
-            self.nameLineEdit.setText(data["patient_name"])
+            if self.registration_id:
+                data = fetch_data("patients/data", {"_id": self.registration_id})
+                self.idLineEdit.setText(str(self.registration_id))
+                self.nameLineEdit.setText(data["patient_name"])
+            else:
+                data = fetch_data("patients/")
+                for patient in data:
+                    self.comboBox.addItem(str(patient["_id"]) + " - " + patient["patient_name"])
         except Exception as e:
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
-    def process_images(self, registration_id):
+    def process_images(self):
         if len(self.input_validation_errors) == 0:
             self.displayErrorMessage(False)
             now_time = time.time_ns()
             data = {
-                "patient_id": registration_id,
+                "patient_id": self.registration_id,
                 "depth": None,
                 "pressure": None,
                 "time": now_time
@@ -265,7 +296,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
                 if type(response) is str:
                     self.displayErrorMessage(True, response)
                 else:
-                    self.stack_pose_visualization_page(registration_id, now_time, response)
+                    self.stack_pose_visualization_page(self.registration_id, now_time, response)
 
     def stack_pose_visualization_page(self, registration_id, now_time, response):
         pose_visualization_page = PoseVisualizationPage(self.parent, registration_id, now_time, response)
@@ -278,12 +309,14 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         if remove_message:
             if modality_in_list:
                 self.input_validation_errors.remove(error_message)
-            else:
-                return
         else:
             if not modality_in_list:
                 self.input_validation_errors.append(error_message)
         if len(self.input_validation_errors) == 0:
             self.displayErrorMessage(False)
+            self.uploadButton.setDisabled(False)
         else:
             self.displayErrorMessage(True, " ".join(self.input_validation_errors))
+
+    def selection_changed(self, i):
+        self.registration_id = int(self.comboBox.itemText(i).split("-")[0])
