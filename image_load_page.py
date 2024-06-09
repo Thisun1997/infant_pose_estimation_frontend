@@ -18,7 +18,7 @@ from components.handle_error_message import HandleErrorMessage
 from components.matplotlib_canvas import MatplotlibCanvas
 from components.top_bar import TopBar
 from pose_visualization_page import PoseVisualizationPage
-from utils.common_utils import fetch_data, get_prediction
+from utils.common_utils import fetch_data, get_prediction, sendPostRequest
 
 
 class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
@@ -183,7 +183,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.nameLabel.setStyleSheet(u"color:#757575")
             self.gridLayout_2.addWidget(self.nameLabel, 0, 2, 1, 1)
         else:
-            self.setObjectName("imageUploadPage")
             self.selectPatientLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
             self.selectPatientLabel.setObjectName(u"idLabel")
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -292,14 +291,14 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             else:
                 for modality in self.images:
                     data[modality] = self.images[modality].tolist()
-                response = get_prediction("patients/prediction", data)
-                if type(response) is str:
-                    self.displayErrorMessage(True, response)
+                response = sendPostRequest("patients/prediction", data)
+                if response["code"] != 200:
+                    self.displayErrorMessage(True, response["message"])
                 else:
-                    self.stack_pose_visualization_page(self.registration_id, now_time, response)
+                    self.stack_pose_visualization_page(response["message"])
 
-    def stack_pose_visualization_page(self, registration_id, now_time, response):
-        pose_visualization_page = PoseVisualizationPage(self.parent, registration_id, now_time, response)
+    def stack_pose_visualization_page(self, inserted_id):
+        pose_visualization_page = PoseVisualizationPage(self.parent, inserted_id)
         self.parent.addWidget(pose_visualization_page)
         self.parent.setCurrentIndex(self.parent.currentIndex() + 1)
 

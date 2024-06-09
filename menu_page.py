@@ -10,10 +10,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from components.clickable_label import ClickableLabel
 from components.dialog_with_guide import DialogWithGuide
 from components.top_bar import TopBar
+from feedback_page import FeedbackPage
 from image_load_page import ImageUploadPage
 from patient_registration_page import PatientRegistrationPage
+from view_history_page import ViewHistoryPage
 
 
 class MenuPage(DialogWithGuide):
@@ -76,6 +79,13 @@ class MenuPage(DialogWithGuide):
         self.historyButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
         self.historyButton.setObjectName("historyButton")
         self.loginFormLayout.setWidget(2, QtWidgets.QFormLayout.SpanningRole, self.historyButton)
+        self.feedbackLabel = ClickableLabel(self)
+        self.feedbackLabel.setObjectName(u"feedbackLabel")
+        self.feedbackLabel.setGeometry(QtCore.QRect(670, 560, 120, 20))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.feedbackLabel.setFont(font)
+        self.feedbackLabel.setStyleSheet("color:rgb(0, 170, 255)")
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -83,7 +93,8 @@ class MenuPage(DialogWithGuide):
         self.topBar.loginButton.clicked.connect(self.gotoHome)
         self.registerButton.clicked.connect(self.gotoPatientRegistration)
         self.viewButton.clicked.connect(self.gotoView)
-        # self.historyButton.clicked.connect(self.gotoHistory)
+        self.historyButton.clicked.connect(self.gotoHistory)
+        self.feedbackLabel.clicked.connect(lambda: self.showFeedbackPage())
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -92,6 +103,8 @@ class MenuPage(DialogWithGuide):
         self.viewButton.setText(_translate("menuPage", "View Pose Estimation"))
         self.registerButton.setText(_translate("menuPage", "Register a Patient"))
         self.historyButton.setText(_translate("menuPage", "View Historical Data"))
+        self.feedbackLabel.setText(
+            _translate("menuPage", "<i><u>Provide feedback</u></i>"))
 
     def gotoHome(self):
         self.parent.setCurrentIndex(0)
@@ -105,3 +118,12 @@ class MenuPage(DialogWithGuide):
         image_upload_page = ImageUploadPage(self.parent)
         self.parent.addWidget(image_upload_page)
         self.parent.setCurrentIndex(self.parent.count()-1)
+
+    def gotoHistory(self):
+        history_page = ViewHistoryPage(self.parent)
+        self.parent.addWidget(history_page)
+        self.parent.setCurrentIndex(self.parent.count()-1)
+
+    def showFeedbackPage(self):
+        feedback_page = FeedbackPage(parent=self)
+        feedback_page.show()

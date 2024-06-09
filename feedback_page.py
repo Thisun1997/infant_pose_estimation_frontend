@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import time
 
-# Form implementation generated from reading ui file 'pose_visualization_page.ui'
+# Form implementation generated from reading ui file 'feedback_page.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -10,173 +9,92 @@ import time
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QRect, QByteArray, Qt
-from PyQt5.QtGui import QPixmap
 
-from components.clickable_label import ClickableLabel
-from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
-from components.top_bar import TopBar
-from utils.common_utils import fetch_data
 
 
-class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
+class FeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
 
-    def __init__(self, parent, registration_id, now_time, response):
-        super(PoseVisualizationPage, self).__init__(parent)
-        self.images = {}
-        self.setupUi(registration_id, now_time, response)
+    def __init__(self, insertion_id=None, parent=None):
+        super(FeedbackPage, self).__init__(parent)
+        self.parent = parent
+        self.setupUi(insertion_id)
 
-    def setupUi(self, registration_id, now_time, response):
-        self.setObjectName("poseVisualizationPage")
-        self.resize(1058, 735)
-        self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
-        self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(40, 130, 231, 31))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setStyleSheet("color:rgb(0, 170, 255); font-weight:bold")
-        self.label.setObjectName("label")
-        self.saveButton = QtWidgets.QPushButton(self)
-        self.saveButton.setGeometry(QtCore.QRect(480, 500, 111, 41))
+    def setupUi(self, insertion_id):
+        self.setObjectName("feedbackPage")
+        self.resize(561, 451)
+        self.closeButton = QtWidgets.QPushButton(self)
+        self.closeButton.setGeometry(QtCore.QRect(170, 380, 111, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.saveButton.setFont(font)
-        self.saveButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
-        self.saveButton.setObjectName("saveButton")
-        self.gridLayoutWidget_2 = QtWidgets.QWidget(self)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 170, 941, 41))
-        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.timeLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
-        self.timeLineEdit.setEnabled(False)
+        self.closeButton.setFont(font)
+        self.closeButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+        self.closeButton.setObjectName("closeButton")
+        self.submitButton = QtWidgets.QPushButton(self)
+        self.submitButton.setGeometry(QtCore.QRect(30, 380, 111, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.timeLineEdit.setFont(font)
-        self.timeLineEdit.setObjectName("timeLineEdit")
-        self.gridLayout_2.addWidget(self.timeLineEdit, 0, 5, 1, 1)
-        self.idLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
-        self.idLineEdit.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.idLineEdit.sizePolicy().hasHeightForWidth())
-        self.idLineEdit.setSizePolicy(sizePolicy)
+        self.submitButton.setFont(font)
+        self.submitButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+        self.submitButton.setObjectName("submitButton")
+        self.feedbackLineEdit = QtWidgets.QPlainTextEdit(self)
+        self.feedbackLineEdit.setGeometry(QtCore.QRect(30, 100, 501, 261))
+        # self.feedbackLineEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.feedbackLineEdit.setObjectName("feedbackLineEdit")
+        self.feedbackLineEdit.setFont(font)
+        self.feedbackLineEdit.setStyleSheet("color:#757575")
+        self.descriptionLabel = QtWidgets.QLabel(self)
+        self.descriptionLabel.setGeometry(QtCore.QRect(30, 60, 501, 31))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.descriptionLabel.setFont(font)
+        self.descriptionLabel.setStyleSheet("color:#757575")
+        self.descriptionLabel.setWordWrap(True)
+        self.descriptionLabel.setObjectName("descriptionLabel")
+        self.feedbackLabel = QtWidgets.QLabel(self)
+        self.feedbackLabel.setGeometry(QtCore.QRect(30, 30, 131, 25))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.idLineEdit.setFont(font)
-        self.idLineEdit.setObjectName("idLineEdit")
-        self.gridLayout_2.addWidget(self.idLineEdit, 0, 1, 1, 1)
-        self.idLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.idLabel.setFont(font)
-        self.idLabel.setStyleSheet("color:#757575")
-        self.idLabel.setObjectName("idLabel")
-        self.gridLayout_2.addWidget(self.idLabel, 0, 0, 1, 1)
-        self.nameLineEdit = QtWidgets.QLineEdit(self.gridLayoutWidget_2)
-        self.nameLineEdit.setEnabled(False)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.nameLineEdit.setFont(font)
-        self.nameLineEdit.setObjectName("nameLineEdit")
-        self.gridLayout_2.addWidget(self.nameLineEdit, 0, 3, 1, 1)
-        self.nameLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.nameLabel.setFont(font)
-        self.nameLabel.setStyleSheet("color:#757575")
-        self.nameLabel.setObjectName("nameLabel")
-        self.gridLayout_2.addWidget(self.nameLabel, 0, 2, 1, 1)
-        self.timeLable = QtWidgets.QLabel(self.gridLayoutWidget_2)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.timeLable.setFont(font)
-        self.timeLable.setStyleSheet("color:#757575")
-        self.timeLable.setObjectName("timeLable")
-        self.gridLayout_2.addWidget(self.timeLable, 0, 4, 1, 1)
-        self.imageLabel = QtWidgets.QLabel(self)
-        self.imageLabel.setGeometry(QtCore.QRect(40, 269, 400, 361))
-        self.imageLabel.setMinimumSize(QtCore.QSize(400, 361))
-        self.imageLabel.setMaximumSize(QtCore.QSize(400, 361))
-        self.imageLabel.setText("")
-        self.imageLabel.setFixedSize(400, 361)
-        self.imageLabel.setObjectName("imageLabel")
-        self.lineEdit = QtWidgets.QLineEdit(self)
-        self.lineEdit.setGeometry(QtCore.QRect(480, 270, 501, 211))
-        self.lineEdit.setObjectName("lineEdit")
-        self.remarkLabel = QtWidgets.QLabel(self)
-        self.remarkLabel.setGeometry(QtCore.QRect(480, 230, 131, 25))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.remarkLabel.setFont(font)
-        self.remarkLabel.setStyleSheet("color:#757575")
-        self.remarkLabel.setObjectName("remarkLabel")
-        self.lineEdit.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
-        self.lineEdit.setStyleSheet("color:#757575")
-        self.lineEdit.setFont(font)
-        self.visualizationLabel = QtWidgets.QLabel(self)
-        self.visualizationLabel.setGeometry(QtCore.QRect(40, 230, 131, 25))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.visualizationLabel.setFont(font)
-        self.visualizationLabel.setStyleSheet("color:#757575")
-        self.visualizationLabel.setObjectName("remarkLabel")
-        self.feedbackLinkLabel = ClickableLabel(self)
-        self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 610, 231, 21))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.feedbackLinkLabel.setFont(font)
-        self.feedbackLinkLabel.setStyleSheet("color:rgb(0, 170, 255)")
-        self.feedbackLinkLabel.setObjectName("feedbackLinkLabel")
-        self.addErrorLabel(QRect(40, 170, 201, 21), self)
+        self.feedbackLabel.setFont(font)
+        self.feedbackLabel.setStyleSheet("color:#757575")
+        self.feedbackLabel.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.feedbackLabel.setObjectName("feedbackLabel")
 
-        self.retranslateUi()
+        self.addErrorLabel(QtCore.QRect(30, 100, 411, 25), self)
+
+        self.retranslateUi(insertion_id)
         QtCore.QMetaObject.connectSlotsByName(self)
 
-        self.setValues(registration_id, now_time, response)
-        self.topBar.loginButton.clicked.connect(self.gotoHome)
-        self.topBar.menuButton.clicked.connect(self.goToMenu)
-        self.saveButton.clicked.connect(lambda: self.save(registration_id, now_time))
+        self.closeButton.clicked.connect(self.close)
+        self.submitButton.clicked.connect(lambda: self.save(insertion_id))
 
-    def retranslateUi(self):
+    def retranslateUi(self, insertion_id):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("poseVisualizationPage", "Dialog"))
-        self.label.setText(_translate("poseVisualizationPage", "Pose visualization"))
-        self.saveButton.setText(_translate("poseVisualizationPage", "Save"))
-        self.idLabel.setText(_translate("poseVisualizationPage", "Registration Id"))
-        self.nameLabel.setText(_translate("poseVisualizationPage", "Name"))
-        self.timeLable.setText(_translate("poseVisualizationPage", "Time"))
-        self.remarkLabel.setText(_translate("poseVisualizationPage", "Medical remarks"))
-        self.visualizationLabel.setText(_translate("poseVisualizationPage", "Visualization"))
-        self.feedbackLinkLabel.setText(
-            _translate("poseVisualizationPage", "<i><u>Provide feedback on this prediction</u></i>"))
+        self.setWindowTitle(_translate("feedbackPage", "Feedback Page"))
+        self.closeButton.setText(_translate("feedbackPage", "Close"))
+        self.submitButton.setText(_translate("feedbackPage", "Submit"))
+        if insertion_id:
+            self.descriptionLabel.setText(_translate("feedbackPage", "You can provide any shortcomings, anomalies, etc. you observe in the current pose estimation here."))
+        else:
+            self.descriptionLabel.setText(_translate("feedbackPage", "You can provide a genral feedback on the system here."))
+        self.feedbackLabel.setText(_translate("feedbackPage", "Feedback"))
 
-    def setValues(self, registration_id, now_time, response):
-        try:
-            data = fetch_data("patients/data", {"_id": registration_id})
-            self.idLineEdit.setText(str(registration_id))
-            self.nameLineEdit.setText(data["patient_name"])
-            self.timeLineEdit.setText(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(now_time / 1e9)))
-            pixmap = QPixmap()
-            pixmap.loadFromData(QByteArray(response))
-            scaled_pixmap = pixmap.scaled(self.imageLabel.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            print(pixmap.size(), self.imageLabel.size(), scaled_pixmap.size())
-            self.imageLabel.setAlignment(Qt.AlignCenter)
-            self.imageLabel.setPixmap(scaled_pixmap)
-        except Exception as e:
-            self.displayErrorMessage(True, "Error fetching data: " + str(e))
+    def save(self, insertion_id):
+        feedback = self.feedbackLineEdit.toPlainText()
+        if feedback:
+            if insertion_id:
+                data = {
+                    "vis_insertion_id": insertion_id,
+                    "feedback": feedback
+                }
+            else:
+                data = {
+                    "feedback": feedback
+                }
+            response = self.handlePostRequest("feedback/add", data, True)
+            if response:
+                self.error.setStyleSheet(u"color: rgb(0, 234, 0)")
+                self.displayErrorMessage(True, response)
 
-    def save(self, registration_id, now_time):
-        remark = self.lineEdit.text()
-        if remark:
-            query_data = {
-                "patient_id": registration_id,
-                "time": now_time,
-            }
-            self.handlePutRequest("patients/update", query_data, {"medical_remark": remark})
+
+
