@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QDate, QDateTime
+from PyQt5.QtCore import QDate, QDateTime, Qt
 from PyQt5.QtWidgets import QSizePolicy
 
 from components.dialog_with_guide import DialogWithGuide
@@ -135,13 +135,29 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             # scroll area
             self.scrollArea = QtWidgets.QScrollArea(self)
             self.scrollArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
-            # self.scrollArea.setWidgetResizable(True)
             sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
             sizePolicy2.setHorizontalStretch(0)
             sizePolicy2.setVerticalStretch(0)
             sizePolicy2.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
             self.scrollArea.setSizePolicy(sizePolicy2)
             self.scrollArea.setObjectName("scrollArea")
+            self.scrollArea.setVisible(False)
+            # scroll area replacing text
+            self.textArea = QtWidgets.QLabel(self)
+            self.textArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
+            sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            sizePolicy2.setHorizontalStretch(0)
+            sizePolicy2.setVerticalStretch(0)
+            sizePolicy2.setHeightForWidth(self.textArea.sizePolicy().hasHeightForWidth())
+            self.textArea.setSizePolicy(sizePolicy2)
+            self.textArea.setObjectName("textArea")
+            self.textArea.setAlignment(Qt.AlignCenter)
+            self.textArea.setStyleSheet("color:#757575")
+            self.textArea.setFont(font)
+            self.textArea.setMinimumSize(QtCore.QSize(630, 390))
+            self.textArea.setMaximumSize(QtCore.QSize(630, 390))
+            self.textArea.setVisible(True)
+            # self.scrollArea.setWidgetResizable(True)
             self.scrollAreaWidgetContents = QtWidgets.QWidget()
             self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
             # self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 582, 486))
@@ -307,6 +323,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
         self.dateOfBirthLabel.setText(_translate("viewHistoryPage", "Date of Birth"))
         self.contactNumberLabel.setText(_translate("viewHistoryPage", "Contact Number"))
         self.addressLabel.setText(_translate("viewHistoryPage", "Address"))
+        self.textArea.setText(_translate("viewHistoryPage", "History data will appear here"))
 
     def fetchPatientList(self):
         try:
@@ -322,7 +339,8 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
     def viewData(self):
         try:
             self.displayErrorMessage(False)
-            if self.gridLayout_4.count() > 0: self.clearScrollArea()
+            # if self.gridLayout_4.count() > 0:
+            self.clearScrollArea()
             self.clearFields()
             fromTime = self.fromDateEdit.date()
             toTime = self.toDateEdit.date()
@@ -343,7 +361,9 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
                 history_data = fetch_data("patients/history_data", query_data)
                 if "message" in history_data:
                     self.displayErrorMessage(True, history_data["message"])
+                    self.updateScrollAndTextAreas(False, True)
                 else:
+                    self.updateScrollAndTextAreas(True,False)
                     for i in range(len(history_data)):
                         print(history_data[i]["_id"])
                         feedback_data = fetch_data("feedback/get", {"vis_insertion_id": history_data[i]["_id"]["$oid"]})
@@ -361,10 +381,11 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
                     self.scrollAreaWidgetContents.adjustSize()
                     self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         except Exception as e:
-            print(e)
+            self.updateScrollAndTextAreas(False, True)
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
     def clearScrollArea(self):
+        self.updateScrollAndTextAreas(False,True, True)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
@@ -378,3 +399,13 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
         self.guardianLineEdit.clear()
         self.addressLineEdit.clear()
         self.contactNumberLineEdit.clear()
+
+    def updateScrollAndTextAreas(self, is_scroll_area_visible, is_text_area_visible, text_area_loading=False):
+        self.scrollArea.setVisible(is_scroll_area_visible)
+        self.textArea.setVisible(is_text_area_visible)
+        if text_area_loading:
+            self.textArea.setText("Loading...")
+        else:
+            self.textArea.setText("History data will appear here")
+
+

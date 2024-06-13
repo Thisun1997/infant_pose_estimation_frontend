@@ -71,8 +71,8 @@ class HandleErrorMessage:
                 self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 240, 941, 41))
                 self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 200, 941, 41))
                 self.scrollArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
+                self.textArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 330, 331, 331))
-                # self.gridLayoutWidget_3.setGeometry(QtCore.QRect(0, 0, 331, 281))
         else:
             self.error.setHidden(True)
             if self.objectName() == "LoginPage":
@@ -107,8 +107,8 @@ class HandleErrorMessage:
                 self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 200, 941, 41))
                 self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 160, 941, 41))
                 self.scrollArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
+                self.textArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 290, 331, 331))
-                # self.gridLayoutWidget_3.setGeometry(QtCore.QRect(0, 0, 331, 281))
 
     def gotoHome(self):
         self.parent.setCurrentIndex(0)
