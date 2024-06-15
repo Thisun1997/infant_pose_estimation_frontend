@@ -15,6 +15,7 @@ from PyQt5.QtGui import QFont
 from components.handle_error_message import HandleErrorMessage
 from components.top_bar import TopBar
 from menu_page import MenuPage
+from model.user import User
 from utils.common_utils import sendPostRequest, has_empty_or_null_value
 
 
@@ -134,14 +135,16 @@ class LoginPage(QtWidgets.QDialog, HandleErrorMessage):
             "password": password,
             "user_type": user_type
         }
+        print(data)
         if self.handlePostRequest("users/auth", data):
-            self.stack_menu_page()
+            user = User(username, user_type)
+            self.stack_menu_page(user)
 
     def label_clicked(self):
         self.parent.setCurrentIndex(0)
 
-    def stack_menu_page(self):
-        menuPage = MenuPage(self.parent)
+    def stack_menu_page(self, user):
+        menuPage = MenuPage(self.parent, user)
         self.parent.addWidget(menuPage)
         # self.parent.setCurrentIndex(self.parent.currentIndex()+1)
         for i in range(self.parent.count()):

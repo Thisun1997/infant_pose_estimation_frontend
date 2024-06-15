@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 
 # Form implementation generated from reading ui file 'feedback_page.ui'
 #
@@ -18,6 +19,7 @@ class FeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
     def __init__(self, insertion_id=None, parent=None):
         super(FeedbackPage, self).__init__(parent)
         self.parent = parent
+        self.user = self.parent.user
         self.setupUi(insertion_id)
 
     def setupUi(self, insertion_id):
@@ -82,15 +84,14 @@ class FeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
     def save(self, insertion_id):
         feedback = self.feedbackLineEdit.toPlainText()
         if feedback:
+            now_time = time.time_ns()
+            data = {
+                "feedback": feedback,
+                "user": self.user.username,
+                "time": now_time
+            }
             if insertion_id:
-                data = {
-                    "vis_insertion_id": insertion_id,
-                    "feedback": feedback
-                }
-            else:
-                data = {
-                    "feedback": feedback
-                }
+                data["vis_insertion_id"] = insertion_id
             response = self.handlePostRequest("feedback/add", data, True)
             if response:
                 self.error.setStyleSheet(u"color: rgb(0, 234, 0)")

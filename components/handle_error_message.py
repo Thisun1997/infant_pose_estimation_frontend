@@ -111,7 +111,18 @@ class HandleErrorMessage:
                 self.widget_2.setGeometry(QtCore.QRect(680, 290, 331, 331))
 
     def gotoHome(self):
-        self.parent.setCurrentIndex(0)
+        try:
+            # if self.user:
+            #     self.user = None
+            i = self.parent.count() - 1
+            while self.parent.count() > 1:
+                widget = self.parent.widget(i)
+                print(widget.objectName())
+                self.parent.removeWidget(widget)
+                i -= 1
+            self.parent.setCurrentIndex(0)
+        except Exception as e:
+            print(e)
 
     def goToMenu(self):
         for i in range(self.parent.count()):

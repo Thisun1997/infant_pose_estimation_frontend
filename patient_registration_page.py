@@ -19,14 +19,15 @@ from registration_success import RegistrationSuccessPopup
 
 
 class PatientRegistrationPage(DialogWithGuide, HandleErrorMessage):
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         super(PatientRegistrationPage, self).__init__(parent)
+        self.user = user
         self.setupUi()
 
     def setupUi(self):
         self.setObjectName("patientRegistrationPage")
         self.resize(1058, 735)
-        self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
+        self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True, user=self.user)
         self.formLayoutWidget = QtWidgets.QWidget(self)
         self.formLayoutWidget.setGeometry(QtCore.QRect(40, 170, 921, 296))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
@@ -190,5 +191,5 @@ class PatientRegistrationPage(DialogWithGuide, HandleErrorMessage):
         if response:self.show_popup(response)
 
     def show_popup(self, response):
-        popup = RegistrationSuccessPopup(response, self)
+        popup = RegistrationSuccessPopup(response, self.user, self)
         popup.show()

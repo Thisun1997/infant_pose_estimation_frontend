@@ -16,11 +16,11 @@ from image_load_page import ImageUploadPage
 
 
 class RegistrationSuccessPopup(QtWidgets.QDialog):
-    def __init__(self, response, parent=None):
+    def __init__(self, response, user, parent=None):
         super(RegistrationSuccessPopup, self).__init__(parent)
         self.parent = parent
+        self.user = user
         self.setupUi(response)
-
 
     def setupUi(self, response):
         self.setObjectName("RegistrationSuccessPopup")
@@ -57,6 +57,6 @@ class RegistrationSuccessPopup(QtWidgets.QDialog):
         # patient_admission_page = PatientAdmissionPage(self.parent.parent, registration_id)
         # self.parent.parent.addWidget(patient_admission_page)
         # self.parent.parent.setCurrentIndex(self.parent.parent.currentIndex() + 1)
-        image_load_page = ImageUploadPage(self.parent.parent, registration_id)
+        image_load_page = ImageUploadPage(self.parent.parent, self.user, registration_id)
         self.parent.parent.addWidget(image_load_page)
         self.parent.parent.setCurrentIndex(self.parent.parent.currentIndex() + 1)

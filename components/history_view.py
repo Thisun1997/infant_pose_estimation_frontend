@@ -94,6 +94,27 @@ class HistoryView(QtWidgets.QWidget):
         self.feedbackLineEdit.setObjectName("feedbackLineEdit")
         self.feedbackLineEdit.setLineWrapMode(QtWidgets.QPlainTextEdit.WidgetWidth)
         self.verticalLayout.addWidget(self.feedbackLineEdit)
+        self.userLabel = QtWidgets.QLabel(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.userLabel.sizePolicy().hasHeightForWidth())
+        self.userLabel.setSizePolicy(sizePolicy)
+        self.userLabel.setMinimumSize(QtCore.QSize(115, 0))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.userLabel.setFont(font)
+        self.userLabel.setStyleSheet("color:#757575")
+        self.userLabel.setObjectName("userLabel")
+        self.verticalLayout.addWidget(self.userLabel)
+        self.userLineEdit = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.userLineEdit.setReadOnly(True)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.userLineEdit.setFont(font)
+        self.userLineEdit.setStyleSheet("color:#757575")
+        self.userLineEdit.setObjectName("userLineEdit")
+        self.verticalLayout.addWidget(self.userLineEdit)
         self.retranslateUi()
         self.setValues()
 
@@ -102,18 +123,23 @@ class HistoryView(QtWidgets.QWidget):
         self.timeLabel.setText(_translate("viewHistoryPage", "Time"))
         self.medicalRemarkLabel.setText(_translate("viewHistoryPage", "Medical Remarks"))
         self.feedbackLabel.setText(_translate("viewHistoryPage", "Feedback on Pose Estimation"))
+        self.userLabel.setText(_translate("viewHistoryPage", "User"))
 
     def setValues(self):
         data = self.data
         self.time.setText(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data["time"] / 1e9)))
         medical_remark = "-"
         feedback = "-"
+        user = "-"
         if "medical_remark" in data:
             medical_remark = data["medical_remark"]
         if "feedback" in data:
             feedback = data["feedback"]
+        if "user" in data:
+            user = data["user"]
         self.medicalRemarkLineEdit.setPlainText(medical_remark)
         self.feedbackLineEdit.setPlainText(feedback)
+        self.userLineEdit.setText(user)
 
         pixmap = QPixmap()
         print(data["visualization"])

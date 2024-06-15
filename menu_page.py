@@ -16,12 +16,14 @@ from components.top_bar import TopBar
 from feedback_page import FeedbackPage
 from image_load_page import ImageUploadPage
 from patient_registration_page import PatientRegistrationPage
+from view_feedback_page import ViewFeedbackPage
 from view_history_page import ViewHistoryPage
 
 
 class MenuPage(DialogWithGuide):
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         super(MenuPage, self).__init__(parent)
+        self.user = user
         self.setupUi()
 
     def setupUi(self):
@@ -34,7 +36,7 @@ class MenuPage(DialogWithGuide):
         self.setSizePolicy(sizePolicy)
         self.setMinimumSize(QtCore.QSize(1058, 735))
         self.setMaximumSize(QtCore.QSize(1058, 735))
-        self.topBar = TopBar(self, logout_visible=True)
+        self.topBar = TopBar(self, logout_visible=True, user=self.user)
         self.actionWidget = QtWidgets.QWidget(self)
         self.actionWidget.setGeometry(QtCore.QRect(259, 180, 521, 371))
         self.actionWidget.setAutoFillBackground(False)
@@ -58,72 +60,110 @@ class MenuPage(DialogWithGuide):
         self.loginFormLayout.setHorizontalSpacing(42)
         self.loginFormLayout.setVerticalSpacing(35)
         self.loginFormLayout.setObjectName("loginFormLayout")
-        self.viewButton = QtWidgets.QPushButton(self.formLayoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.viewButton.setFont(font)
-        self.viewButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
-        self.viewButton.setObjectName("viewButton")
-        self.loginFormLayout.setWidget(1, QtWidgets.QFormLayout.SpanningRole, self.viewButton)
-        self.registerButton = QtWidgets.QPushButton(self.formLayoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.registerButton.setFont(font)
-        self.registerButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
-        self.registerButton.setObjectName("registerButton")
-        self.loginFormLayout.setWidget(0, QtWidgets.QFormLayout.SpanningRole, self.registerButton)
-        self.historyButton = QtWidgets.QPushButton(self.formLayoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.historyButton.setFont(font)
-        self.historyButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
-        self.historyButton.setObjectName("historyButton")
-        self.loginFormLayout.setWidget(2, QtWidgets.QFormLayout.SpanningRole, self.historyButton)
-        self.feedbackLabel = ClickableLabel(self)
-        self.feedbackLabel.setObjectName(u"feedbackLabel")
-        self.feedbackLabel.setGeometry(QtCore.QRect(670, 560, 120, 20))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.feedbackLabel.setFont(font)
-        self.feedbackLabel.setStyleSheet("color:rgb(0, 170, 255)")
+        if self.user.user_type == 1:
+            self.viewButton = QtWidgets.QPushButton(self.formLayoutWidget)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            self.viewButton.setFont(font)
+            self.viewButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.viewButton.setObjectName("viewButton")
+            self.loginFormLayout.setWidget(1, QtWidgets.QFormLayout.SpanningRole, self.viewButton)
+            self.registerButton = QtWidgets.QPushButton(self.formLayoutWidget)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            self.registerButton.setFont(font)
+            self.registerButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.registerButton.setObjectName("registerButton")
+            self.loginFormLayout.setWidget(0, QtWidgets.QFormLayout.SpanningRole, self.registerButton)
+            self.historyButton = QtWidgets.QPushButton(self.formLayoutWidget)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            self.historyButton.setFont(font)
+            self.historyButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.historyButton.setObjectName("historyButton")
+            self.loginFormLayout.setWidget(2, QtWidgets.QFormLayout.SpanningRole, self.historyButton)
+            self.feedbackLabel = ClickableLabel(self)
+            self.feedbackLabel.setObjectName(u"feedbackLabel")
+            self.feedbackLabel.setGeometry(QtCore.QRect(670, 560, 120, 20))
+            font = QtGui.QFont()
+            font.setPointSize(11)
+            self.feedbackLabel.setFont(font)
+            self.feedbackLabel.setStyleSheet("color:rgb(0, 170, 255)")
+
+            self.registerButton.clicked.connect(self.gotoPatientRegistration)
+            self.viewButton.clicked.connect(self.gotoView)
+            self.historyButton.clicked.connect(self.gotoHistory)
+            self.feedbackLabel.clicked.connect(lambda: self.showFeedbackPage())
+
+        elif self.user.user_type == 2:
+            self.viewFeedbackButton = QtWidgets.QPushButton(self.formLayoutWidget)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            self.viewFeedbackButton.setFont(font)
+            self.viewFeedbackButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.viewFeedbackButton.setObjectName("viewFeedbackButton")
+            self.loginFormLayout.setWidget(1, QtWidgets.QFormLayout.SpanningRole, self.viewFeedbackButton)
+            self.updateModelButton = QtWidgets.QPushButton(self.formLayoutWidget)
+            font = QtGui.QFont()
+            font.setPointSize(14)
+            self.updateModelButton.setFont(font)
+            self.updateModelButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.updateModelButton.setObjectName("updateModelButton")
+            self.loginFormLayout.setWidget(0, QtWidgets.QFormLayout.SpanningRole, self.updateModelButton)
+
+            self.viewFeedbackButton.clicked.connect(self.gotoFeedbackView)
+            # self.updateModelButton.clicked.connect(self.gotoModelUpdate)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
         self.topBar.loginButton.clicked.connect(self.gotoHome)
-        self.registerButton.clicked.connect(self.gotoPatientRegistration)
-        self.viewButton.clicked.connect(self.gotoView)
-        self.historyButton.clicked.connect(self.gotoHistory)
-        self.feedbackLabel.clicked.connect(lambda: self.showFeedbackPage())
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("menuPage", "Infant Pose Visualizer"))
         self.actionLabel.setText(_translate("menuPage", "Please Select an Action"))
-        self.viewButton.setText(_translate("menuPage", "View Pose Estimation"))
-        self.registerButton.setText(_translate("menuPage", "Register a Patient"))
-        self.historyButton.setText(_translate("menuPage", "View Historical Data"))
-        self.feedbackLabel.setText(
-            _translate("menuPage", "<i><u>Provide feedback</u></i>"))
+        if self.user.user_type == 1:
+            self.viewButton.setText(_translate("menuPage", "View Pose Estimation"))
+            self.registerButton.setText(_translate("menuPage", "Register a Patient"))
+            self.historyButton.setText(_translate("menuPage", "View Historical Data"))
+            self.feedbackLabel.setText(
+                _translate("menuPage", "<i><u>Provide feedback</u></i>"))
+        elif self.user.user_type == 2:
+            self.viewFeedbackButton.setText(_translate("menuPage", "View Feedback"))
+            self.updateModelButton.setText(_translate("menuPage", "Update Model"))
 
     def gotoHome(self):
+        if self.user:
+            self.user = None
+        i = self.parent.count()-1
+        while self.parent.count() > 1:
+            widget = self.parent.widget(i)
+            print(widget.objectName())
+            self.parent.removeWidget(widget)
+            i -= 1
         self.parent.setCurrentIndex(0)
 
     def gotoPatientRegistration(self):
-        patient_registration = PatientRegistrationPage(self.parent)
+        patient_registration = PatientRegistrationPage(self.parent, self.user)
         self.parent.addWidget(patient_registration)
-        self.parent.setCurrentIndex(self.parent.count()-1)
+        self.parent.setCurrentIndex(self.parent.count() - 1)
 
     def gotoView(self):
-        image_upload_page = ImageUploadPage(self.parent)
+        image_upload_page = ImageUploadPage(self.parent, self.user)
         self.parent.addWidget(image_upload_page)
-        self.parent.setCurrentIndex(self.parent.count()-1)
+        self.parent.setCurrentIndex(self.parent.count() - 1)
 
     def gotoHistory(self):
-        history_page = ViewHistoryPage(self.parent)
+        history_page = ViewHistoryPage(self.parent, self.user)
         self.parent.addWidget(history_page)
-        self.parent.setCurrentIndex(self.parent.count()-1)
+        self.parent.setCurrentIndex(self.parent.count() - 1)
 
     def showFeedbackPage(self):
         feedback_page = FeedbackPage(parent=self)
         feedback_page.show()
+
+    def gotoFeedbackView(self):
+        feedback_view_page = ViewFeedbackPage(self.parent, self.user)
+        self.parent.addWidget(feedback_view_page)
+        self.parent.setCurrentIndex(self.parent.count() - 1)

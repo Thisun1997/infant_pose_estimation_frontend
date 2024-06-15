@@ -12,7 +12,7 @@ import numpy as np
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import QRect, Qt
 
 from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
@@ -23,17 +23,18 @@ from utils.common_utils import fetch_data, get_prediction, sendPostRequest
 
 
 class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
-    def __init__(self, parent, registration_id=None):
+    def __init__(self, parent, user, registration_id=None):
         super(ImageUploadPage, self).__init__(parent)
         self.registration_id = registration_id
         self.images = {}
         self.input_validation_errors = []
+        self.user = user
         self.setupUi()
 
     def setupUi(self):
         self.setObjectName("imageUploadPage")
         self.resize(1058, 735)
-        self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
+        self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True, user=self.user)
         self.label = QtWidgets.QLabel(self)
         self.label.setGeometry(QtCore.QRect(40, 130, 231, 31))
         font = QtGui.QFont()
@@ -87,13 +88,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.depthFileLineEdit.setFont(font)
         self.depthFileLineEdit.setObjectName("depthFileLineEdit")
         self.gridLayout.addWidget(self.depthFileLineEdit, 0, 1, 1, 1)
-        # self.depthUploadButton = QtWidgets.QPushButton(self.gridLayoutWidget)
-        # font = QtGui.QFont()
-        # font.setPointSize(12)
-        # self.depthUploadButton.setFont(font)
-        # self.depthUploadButton.setStyleSheet("color:#757575")
-        # self.depthUploadButton.setObjectName("depthUploadButton")
-        # self.gridLayout.addWidget(self.depthUploadButton, 0, 2, 1, 1)
         self.depthLabel = QtWidgets.QLabel(self.gridLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -112,7 +106,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         font.setPointSize(12)
         self.depthLabel_2.setFont(font)
         self.depthLabel_2.setStyleSheet("color:#757575")
-        self.depthLabel_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.depthLabel_2.setAlignment(Qt.AlignCenter)
         self.depthLabel_2.setObjectName("depthLabel_2")
         self.labelLayout.addWidget(self.depthLabel_2)
         self.pressureLabel_2 = QtWidgets.QLabel(self.horizontalLayoutWidget)
@@ -120,7 +114,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         font.setPointSize(12)
         self.pressureLabel_2.setFont(font)
         self.pressureLabel_2.setStyleSheet("color:#757575")
-        self.pressureLabel_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.pressureLabel_2.setAlignment(Qt.AlignCenter)
         self.pressureLabel_2.setObjectName("pressureLabel_2")
         self.labelLayout.addWidget(self.pressureLabel_2)
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self)
@@ -212,8 +206,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.topBar.loginButton.clicked.connect(self.gotoHome)
         self.topBar.menuButton.clicked.connect(self.goToMenu)
 
-        # self.depthUploadButton.clicked.connect(lambda: self.upload_file_and_display("depth"))
-        # self.pressureUploadButton.clicked.connect(lambda: self.upload_file_and_display("pressure"))
         self.pressureUploadButton.clicked.connect(lambda: self.upload_file_and_display())
         self.uploadButton.clicked.connect(lambda: self.process_images())
 
@@ -222,10 +214,8 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         self.setWindowTitle(_translate("imageUploadPage", "Dialog"))
         self.label.setText(_translate("imageUploadPage", "Upload Images"))
         self.uploadButton.setText(_translate("imageUploadPage", "Process"))
-        # self.pressureUploadButton.setText(_translate("imageUploadPage", "Upload"))
         self.pressureUploadButton.setText(_translate("imageUploadPage", "Upload Images"))
         self.pressureLabel.setText(_translate("imageUploadPage", "Pressure image<sup>*</sup>"))
-        # self.depthUploadButton.setText(_translate("imageUploadPage", "Upload"))
         self.depthLabel.setText(_translate("imageUploadPage", "Depth image<sup>*</sup>"))
         self.depthLabel_2.setText(_translate("imageUploadPage", "Depth image"))
         self.pressureLabel_2.setText(_translate("imageUploadPage", "Pressure image"))
@@ -234,37 +224,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.idLabel.setText(_translate("imageUploadPage", "Registration ID"))
         else:
             self.selectPatientLabel.setText(_translate("imageUploadPage", "Select Patient"))
-
-    # def upload_file_and_display(self, modality):
-    #     try:
-    #         options = QtWidgets.QFileDialog.Options()
-    #         options |= QtWidgets.QFileDialog.ReadOnly
-    #         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
-    #                                                             "NumPy Files (*.npy)", options=options)
-    #         if fileName:
-    #             np_array = np.load(fileName)
-    #             if modality == "depth":
-    #                 self.depthFileLineEdit.setText(fileName)
-    #                 self.depthCanvas.axes.clear()
-    #                 self.depthCanvas.draw_idle()
-    #                 if np_array.dtype != np.uint16:
-    #                     self.handle_image_input_validation(modality)
-    #                     return
-    #                 self.depthCanvas.axes.imshow(np_array)
-    #                 self.depthCanvas.draw()
-    #             elif modality == "pressure":
-    #                 self.pressureFileLineEdit.setText(fileName)
-    #                 self.pressureCanvas.axes.clear()
-    #                 self.pressureCanvas.draw_idle()
-    #                 if np_array.dtype != np.float32:
-    #                     self.handle_image_input_validation(modality)
-    #                     return
-    #                 self.pressureCanvas.axes.imshow(np_array)
-    #                 self.pressureCanvas.draw()
-    #             self.images[modality] = np_array
-    #             self.handle_image_input_validation(modality, True)
-    #     except Exception as e:
-    #         self.displayErrorMessage(True, "Error occurred: " + str(e))
 
     def upload_file_and_display(self):
         try:
@@ -329,7 +288,6 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
                 else:
                     return "input file/s are not in correct format"
 
-
     def setValues(self):
         try:
             if self.registration_id:
@@ -343,34 +301,14 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         except Exception as e:
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
-    # def process_images(self):
-    #     if len(self.input_validation_errors) == 0:
-    #         self.displayErrorMessage(False)
-    #         now_time = time.time_ns()
-    #         data = {
-    #             "patient_id": self.registration_id,
-    #             "depth": None,
-    #             "pressure": None,
-    #             "time": now_time
-    #         }
-    #         if len(self.images) != 2:
-    #             self.displayErrorMessage(True, "Inputs marked with * are required")
-    #         else:
-    #             for modality in self.images:
-    #                 data[modality] = self.images[modality].tolist()
-    #             response = sendPostRequest("patients/prediction", data)
-    #             if response["code"] != 200:
-    #                 self.displayErrorMessage(True, response["message"])
-    #             else:
-    #                 self.stack_pose_visualization_page(response["message"])
-
     def process_images(self):
         now_time = time.time_ns()
         data = {
             "patient_id": self.registration_id,
             "depth": None,
             "pressure": None,
-            "time": now_time
+            "time": now_time,
+            "user": self.user.username
         }
         if len(self.images) != 2:
             self.displayErrorMessage(True, "Inputs marked with * are required")
@@ -384,7 +322,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
                 self.stack_pose_visualization_page(response["message"])
 
     def stack_pose_visualization_page(self, inserted_id):
-        pose_visualization_page = PoseVisualizationPage(self.parent, inserted_id)
+        pose_visualization_page = PoseVisualizationPage(self.parent, self.user, inserted_id)
         self.parent.addWidget(pose_visualization_page)
         self.parent.setCurrentIndex(self.parent.currentIndex() + 1)
 

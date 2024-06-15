@@ -24,16 +24,17 @@ from utils.common_utils import fetch_data
 
 class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
 
-    def __init__(self, parent, inserted_id):
+    def __init__(self, parent, user, inserted_id):
         super(PoseVisualizationPage, self).__init__(parent)
         self.images = {}
+        self.user = user
         self.setupUi(inserted_id)
 
     def setupUi(self, inserted_id):
         try:
             self.setObjectName("poseVisualizationPage")
             self.resize(1058, 735)
-            self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
+            self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True, user=self.user)
             self.label = QtWidgets.QLabel(self)
             self.label.setGeometry(QtCore.QRect(40, 130, 231, 31))
             font = QtGui.QFont()
@@ -50,6 +51,13 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             self.saveButton.setFont(font)
             self.saveButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
             self.saveButton.setObjectName("saveButton")
+            self.backButton = QtWidgets.QPushButton(self)
+            self.backButton.setGeometry(QtCore.QRect(620, 500, 111, 41))
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            self.backButton.setFont(font)
+            self.backButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.backButton.setObjectName("backButton")
             self.gridLayoutWidget_2 = QtWidgets.QWidget(self)
             self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 170, 941, 41))
             self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
@@ -147,6 +155,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             self.topBar.loginButton.clicked.connect(self.gotoHome)
             self.topBar.menuButton.clicked.connect(self.goToMenu)
             self.saveButton.clicked.connect(lambda: self.save(inserted_id))
+            self.backButton.clicked.connect(self.goBack)
             self.feedbackLinkLabel.clicked.connect(lambda: self.showFeedbackPage(inserted_id))
         except Exception as e:
             print(e)
@@ -156,6 +165,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         self.setWindowTitle(_translate("poseVisualizationPage", "Dialog"))
         self.label.setText(_translate("poseVisualizationPage", "Pose visualization"))
         self.saveButton.setText(_translate("poseVisualizationPage", "Save"))
+        self.backButton.setText(_translate("poseVisualizationPage", "Back"))
         self.idLabel.setText(_translate("poseVisualizationPage", "Registration Id"))
         self.nameLabel.setText(_translate("poseVisualizationPage", "Name"))
         self.timeLable.setText(_translate("poseVisualizationPage", "Time"))
@@ -193,3 +203,8 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
     def showFeedbackPage(self, inserted_id):
         feedback_page = FeedbackPage(inserted_id, self)
         feedback_page.show()
+
+    def goBack(self):
+        widget = self.parent.currentWidget()
+        self.parent.removeWidget(widget)
+        self.parent.setCurrentIndex(self.parent.currentIndex())

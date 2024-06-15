@@ -4,8 +4,10 @@ from components.clickable_label import ClickableLabel
 
 
 class TopBar(QtWidgets.QWidget):
-    def __init__(self, parent=None, login_visible=False, logout_visible=False, is_home_accessible=False, is_menu_visible=False):
+    def __init__(self, parent=None, login_visible=False, logout_visible=False, is_home_accessible=False, is_menu_visible=False, user=None):
         super(TopBar,self).__init__(parent)
+        self.user = user
+        self.parent = parent
         self.setupUi(login_visible, logout_visible, is_home_accessible, is_menu_visible)
 
     def setupUi(self, login_visible=False, logout_visible=False, is_home_accessible=False, is_menu_visible=False):
@@ -28,6 +30,21 @@ class TopBar(QtWidgets.QWidget):
         self.mainLabel.setFont(font)
         self.mainLabel.setStyleSheet("font-weight: bold; color: rgb(255, 255, 255)")
         self.mainLabel.setObjectName("mainLabel")
+        print(self.user)
+
+        if self.user:
+            self.loggedUserTextEdit = QtWidgets.QTextEdit(self.parent)
+            self.loggedUserTextEdit.setObjectName(u"loggedUserTextEdit")
+            self.loggedUserTextEdit.setGeometry(QtCore.QRect(930, 100, 131, 31))
+            sizePolicy3 = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+            sizePolicy3.setHorizontalStretch(0)
+            sizePolicy3.setVerticalStretch(0)
+            sizePolicy3.setHeightForWidth(self.loggedUserTextEdit.sizePolicy().hasHeightForWidth())
+            self.loggedUserTextEdit.setSizePolicy(sizePolicy3)
+            self.loggedUserTextEdit.setMinimumSize(QtCore.QSize(131, 0))
+            self.loggedUserTextEdit.setFrameShape(QtWidgets.QFrame.WinPanel)
+            self.loggedUserTextEdit.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.loggedUserTextEdit.setReadOnly(True)
 
         if login_visible or logout_visible:
             self.loginButton = QtWidgets.QPushButton(self)
@@ -56,3 +73,13 @@ class TopBar(QtWidgets.QWidget):
         if logout_visible : self.loginButton.setText(_translate("topBar", "Logout"))
         if is_menu_visible : self.menuButton.setText(_translate("topBar", "Menu"))
         self.mainLabel.setText(_translate("topBar", "Infant Pose Visualizer"))
+        if self.user:
+            self.loggedUserTextEdit.setHtml(_translate("topBar",
+                                                                       u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                                       "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                                       "p, li { white-space: pre-wrap; }\n"
+                                                                       "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                                       "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"
+                                                                       "<span style=\" font-size:10pt; color:#757575;\">Logged user: </span><span style=\" font-size:10pt; font-weight:600; color:#757575;\">"+self.user.username+"</span></p></body></html>",
+                                                                       None))
+

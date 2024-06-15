@@ -78,7 +78,8 @@ class HomeWindow(QDialog):
     def gotoLogin(self):
         login = LoginPage(self.parent)
         self.parent.addWidget(login)
-        self.parent.setCurrentIndex(self.parent.currentIndex()+1)
+        self.parent.setCurrentIndex(self.parent.count() - 1)
+
 
 
 

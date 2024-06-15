@@ -22,16 +22,17 @@ from utils.common_utils import fetch_data
 
 class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
 
-    def __init__(self, parent):
+    def __init__(self, parent, user):
         super(ViewHistoryPage, self).__init__(parent)
         self.selected_patient_id = None
+        self.user = user
         self.setupUi()
 
     def setupUi(self):
         try:
             self.setObjectName("viewHistoryPage")
             self.resize(1058, 735)
-            self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True)
+            self.topBar = TopBar(self, is_menu_visible=True, logout_visible=True, user=self.user)
             self.label = QtWidgets.QLabel(self)
             self.label.setGeometry(QtCore.QRect(40, 130, 231, 31))
             font = QtGui.QFont()
@@ -156,6 +157,8 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             self.textArea.setFont(font)
             self.textArea.setMinimumSize(QtCore.QSize(630, 390))
             self.textArea.setMaximumSize(QtCore.QSize(630, 390))
+            self.textArea.setAlignment(Qt.AlignCenter)
+            self.textArea.wordWrap()
             self.textArea.setVisible(True)
             # self.scrollArea.setWidgetResizable(True)
             self.scrollAreaWidgetContents = QtWidgets.QWidget()
