@@ -17,6 +17,7 @@ from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
 from components.history_view import HistoryView
 from components.top_bar import TopBar
+from edit_patient_data_page import EditPatientPage
 from utils.common_utils import fetch_data
 
 
@@ -298,6 +299,12 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             self.dateEdit.setStyleSheet("color:#757575")
             self.dateEdit.setObjectName("dateEdit")
             self.gridLayout_3.addWidget(self.dateEdit, 2, 1, 1, 1)
+            self.editButton = QtWidgets.QPushButton(self.widget_2)
+            self.editButton.setObjectName(u"editButton")
+            self.editButton.setFont(font)
+            self.editButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
+            self.editButton.setGeometry(QtCore.QRect(230, 300, 90, 31))
+            self.editButton.clicked.connect(self.edit_patient)
 
             self.retranslateUi()
             QtCore.QMetaObject.connectSlotsByName(self)
@@ -317,6 +324,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
         self.setWindowTitle(_translate("viewHistoryPage", "Infant Pose Visualizer"))
         self.label.setText(_translate("viewHistoryPage", "View Historical Data"))
         self.viewButton.setText(_translate("viewHistoryPage", "View"))
+        self.editButton.setText(_translate("viewHistoryPage", "Edit Patient"))
         self.fromLabel.setText(_translate("viewHistoryPage", "From"))
         self.toLabel.setText(_translate("viewHistoryPage", "To"))
         self.selectPatientLabel.setText(_translate("viewHistoryPage", "Select Patient"))
@@ -410,5 +418,17 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             self.textArea.setText("Loading...")
         else:
             self.textArea.setText("History data will appear here")
+
+    def edit_patient(self):
+        if self.selected_patient_id:
+            edit_patient_page = EditPatientPage(self.selected_patient_id, self)
+            edit_patient_page.show()
+            edit_patient_page.dataEntered.connect(self.update_fields)
+
+    def update_fields(self, guardian, contact_number, address):
+        self.guardianLineEdit.setText(guardian)
+        self.addressLineEdit.setPlainText(address)
+        self.contactNumberLineEdit.setText(contact_number)
+
 
 

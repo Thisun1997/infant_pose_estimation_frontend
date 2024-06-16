@@ -73,6 +73,10 @@ class HandleErrorMessage:
                 self.scrollArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
                 self.textArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 330, 331, 331))
+            elif self.objectName() == "EditPatientPage":
+                self.closeButton.setGeometry(QtCore.QRect(170, 460, 111, 41))
+                self.saveButton.setGeometry(QtCore.QRect(30, 460, 111, 41))
+                self.widget_2.setGeometry(QtCore.QRect(30, 100, 511, 341))
         else:
             self.error.setHidden(True)
             if self.objectName() == "LoginPage":
@@ -109,6 +113,10 @@ class HandleErrorMessage:
                 self.scrollArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
                 self.textArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 290, 331, 331))
+            elif self.objectName() == "EditPatientPage":
+                self.closeButton.setGeometry(QtCore.QRect(170, 420, 111, 41))
+                self.saveButton.setGeometry(QtCore.QRect(30, 420, 111, 41))
+                self.widget_2.setGeometry(QtCore.QRect(30, 60, 511, 341))
 
     def gotoHome(self):
         try:

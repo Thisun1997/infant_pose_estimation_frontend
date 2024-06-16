@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QMetaObject
 
 from components.top_bar import TopBar
 
@@ -24,7 +24,7 @@ class GuideDialog(QtWidgets.QDialog):
         self.resize(1058, 735)
         self.topBar = TopBar(self)
         self.guideBox = QtWidgets.QToolBox(self)
-        self.guideBox.setGeometry(QtCore.QRect(90, 150, 921, 231))
+        self.guideBox.setGeometry(QtCore.QRect(90, 110, 921, 571))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -33,89 +33,172 @@ class GuideDialog(QtWidgets.QDialog):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.guideBox.setFont(font)
-        self.guideBox.setStyleSheet("color: rgb(0, 170, 255)")
+        self.guideBox.setStyleSheet(u"color: rgb(0, 170, 255)")
         self.guideBox.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.guideBox.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.guideBox.setObjectName("guideBox")
         self.page_1 = QtWidgets.QWidget()
-        self.page_1.setGeometry(QtCore.QRect(0, 0, 921, 132))
-        self.page_1.setObjectName("page_1")
+        self.page_1.setObjectName(u"page_1")
+        self.page_1.setGeometry(QtCore.QRect(0, 0, 921, 406))
         self.textEdit = QtWidgets.QTextEdit(self.page_1)
+        self.textEdit.setObjectName(u"textEdit")
         self.textEdit.setEnabled(True)
-        self.textEdit.setGeometry(QtCore.QRect(0, 0, 921, 131))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy)
-        self.textEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.textEdit.setGeometry(QtCore.QRect(0, 0, 921, 320))
+        sizePolicy1 = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
+        self.textEdit.setSizePolicy(sizePolicy1)
+        self.textEdit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.textEdit.setAutoFormatting(QtWidgets.QTextEdit.AutoNone)
         self.textEdit.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
-        self.textEdit.setObjectName("textEdit")
-        self.guideBox.addItem(self.page_1, "")
+        self.guideBox.addItem(self.page_1, u"Patient registration and Pose visualization")
         self.page_2 = QtWidgets.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 921, 132))
-        self.page_2.setObjectName("page_2")
+        self.page_2.setObjectName(u"page_2")
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 921, 406))
         self.textEdit_2 = QtWidgets.QTextEdit(self.page_2)
+        self.textEdit_2.setObjectName(u"textEdit_2")
         self.textEdit_2.setEnabled(True)
-        self.textEdit_2.setGeometry(QtCore.QRect(0, 0, 921, 131))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit_2.sizePolicy().hasHeightForWidth())
-        self.textEdit_2.setSizePolicy(sizePolicy)
-        self.textEdit_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.textEdit_2.setGeometry(QtCore.QRect(0, 0, 921, 301))
+        sizePolicy1.setHeightForWidth(self.textEdit_2.sizePolicy().hasHeightForWidth())
+        self.textEdit_2.setSizePolicy(sizePolicy1)
+        self.textEdit_2.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.textEdit_2.setAutoFormatting(QtWidgets.QTextEdit.AutoNone)
         self.textEdit_2.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
-        self.textEdit_2.setObjectName("textEdit_2")
-        self.guideBox.addItem(self.page_2, "")
+        self.guideBox.addItem(self.page_2, u"Pose visualization of a Registred Patient")
         self.page_3 = QtWidgets.QWidget()
-        self.page_3.setObjectName("page_3")
-        self.textEdit_5 = QtWidgets.QTextEdit(self.page_3)
+        self.page_3.setObjectName(u"page_3")
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 921, 406))
+        self.textEdit_5 =QtWidgets. QTextEdit(self.page_3)
+        self.textEdit_5.setObjectName(u"textEdit_5")
         self.textEdit_5.setEnabled(True)
         self.textEdit_5.setGeometry(QtCore.QRect(0, 0, 921, 131))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit_5.sizePolicy().hasHeightForWidth())
-        self.textEdit_5.setSizePolicy(sizePolicy)
-        self.textEdit_5.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        sizePolicy1.setHeightForWidth(self.textEdit_5.sizePolicy().hasHeightForWidth())
+        self.textEdit_5.setSizePolicy(sizePolicy1)
+        self.textEdit_5.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.textEdit_5.setAutoFormatting(QtWidgets.QTextEdit.AutoNone)
         self.textEdit_5.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
-        self.textEdit_5.setObjectName("textEdit_5")
-        self.guideBox.addItem(self.page_3, "")
+        self.guideBox.addItem(self.page_3, u"View Historical Data")
+        self.page_4 = QtWidgets.QWidget()
+        self.page_4.setObjectName(u"page_4")
+        self.textEdit_6 = QtWidgets.QTextEdit(self.page_4)
+        self.textEdit_6.setObjectName(u"textEdit_6")
+        self.textEdit_6.setEnabled(True)
+        self.textEdit_6.setGeometry(QtCore.QRect(0, 0, 921, 371))
+        sizePolicy1.setHeightForWidth(self.textEdit_6.sizePolicy().hasHeightForWidth())
+        self.textEdit_6.setSizePolicy(sizePolicy1)
+        self.textEdit_6.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.textEdit_6.setAutoFormatting(QtWidgets.QTextEdit.AutoNone)
+        self.textEdit_6.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
+        self.guideBox.addItem(self.page_4, u"Edit Patient Data")
+        self.page = QtWidgets.QWidget()
+        self.page.setObjectName(u"page")
+        self.textEdit_7 = QtWidgets.QTextEdit(self.page)
+        self.textEdit_7.setObjectName(u"textEdit_7")
+        self.textEdit_7.setEnabled(True)
+        self.textEdit_7.setGeometry(QtCore.QRect(0, 0, 921, 211))
+        sizePolicy1.setHeightForWidth(self.textEdit_7.sizePolicy().hasHeightForWidth())
+        self.textEdit_7.setSizePolicy(sizePolicy1)
+        self.textEdit_7.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.textEdit_7.setAutoFormatting(QtWidgets.QTextEdit.AutoNone)
+        self.textEdit_7.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
+        self.guideBox.addItem(self.page, u"Give Feedback")
 
         self.retranslateUi()
+
         self.guideBox.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(self)
+
+        QMetaObject.connectSlotsByName(self)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("guideDialog", "Dialog"))
-        self.textEdit.setHtml(_translate("guideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">Register a Patient</span> and Register the patients by providing relevant infoemation.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Upload the depth and pressure images of the pose of the patient under investigation.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You can now vizualise the pose of the infant.</li></ol></body></html>"))
-        self.guideBox.setItemText(self.guideBox.indexOf(self.page_1), _translate("guideDialog", "Patient registration and Pose visualization"))
-        self.textEdit_2.setHtml(_translate("guideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Pose Estimation</span> and  and Search for the patient under investigation using name.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Upload the depth and pressure images of the pose of the patient under investigation.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You can now visualize the pose of the infant.</li></ol></body></html>"))
-        self.guideBox.setItemText(self.guideBox.indexOf(self.page_2), _translate("guideDialog", "Pose visualization of a registred patient"))
-        self.textEdit_5.setHtml(_translate("guideDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Pose Estimation</span> and  and Search for the patient under investigation using name.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Upload the depth and pressure images of the pose of the patient under investigation.</li>\n"
-"<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You can now visualize the pose of the infant.</li></ol></body></html>"))
-        self.guideBox.setItemText(self.guideBox.indexOf(self.page_3), _translate("guideDialog", "Page"))
+        self.textEdit.setHtml(_translate("guideDialog",
+                                                         u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                         "p, li { white-space: pre-wrap; }\n"
+                                                         "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                         "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
+                                                         "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">Register a Patient.</span></li>\n"
+                                                         "<li style=\" font-size:12pt; fon"
+                                                         "t-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:normal;\">Register the patients by providing relevant information. If the registration was a success, a registration id will be issued. </span><span style=\" font-style:normal; color:#754b4b;\">NOTE: Please ask the patients to present the registered id in their next visit.</span></li>\n"
+                                                         "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Upload the depth and pressure images of the pose of the patient under investigation. Here you have to select the folder containing depth and pressure images in &quot;.npy&quot; format.</li>\n"
+                                                         "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:"
+                                                         "0; text-indent:0px;\">The uploaded images will be visualized, if the input images are in correct format.</li>\n"
+                                                         "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:10px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click <span style=\" font-style:italic;\">Process </span>to view the pose estimation.</li>\n"
+                                                         "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Once the pose estimation is visible, you can optionally provide any medical remarks and feedback about the prediction as well. To add a medical remark, type the content in the given text box beside the pose visualization and save it by clicking <span style=\" font-style:italic;\">Save</span>. To give a feedback about the prediction click <span style=\" font-style:italic;\">Provide feedback on this prediction </span>and<span style=\" font-style:italic;\"> </span>in the appearing popup, type the content and click <span style=\" font-style:italic;\">Submit</span> to save it.</li></ol></body></html>",
+                                                        None))
+        self.guideBox.setItemText(self.guideBox.indexOf(self.page_1), _translate("guideDialog",
+                                                                                                 u"Patient registration and Pose visualization",
+                                                                                                 None))
+        self.textEdit_2.setHtml(_translate("guideDialog",
+                                                           u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                           "p, li { white-space: pre-wrap; }\n"
+                                                           "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Pose Estimation.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; f"
+                                                           "ont-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:normal;\">Search for the patient under investigation using name/registered id.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Upload the depth and pressure images of the pose of the patient under investigation. Here you have to select the folder containing depth and pressure images in &quot;.npy&quot; format.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The uploaded images will be visualized, if the input images are in correct format.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-"
+                                                           "top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click <span style=\" font-style:italic;\">Process </span>to view the pose estimation.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Once the pose estimation is visible, you can optionally provide any medical remarks and feedback about the prediction as well. To add a medical remark, type the content in the given text box beside the pose visualization and save it by clicking <span style=\" font-style:italic;\">Save</span>. To give a feedback about the prediction click <span style=\" font-style:italic;\">Provide feedback on this prediction </span>and<span style=\" font-style:italic;\"> </span>in the appearing popup, type the content and click <span style=\" font-style:italic;\">Submit</span> to save it.</li></ol></body></html>",
+                                                           None))
+        self.guideBox.setItemText(self.guideBox.indexOf(self.page_2), _translate("guideDialog",
+                                                                                                 u"Pose visualization of a Registred Patient",
+                                                                                                 None))
+        self.textEdit_5.setHtml(_translate("guideDialog",
+                                                           u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                           "p, li { white-space: pre-wrap; }\n"
+                                                           "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#757575;\">Login using the provided credential as a medical staff member.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Historical Data.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; f"
+                                                           "ont-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:normal;\">Search for the patient whose data you want to view using name/registered Id.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select a date range for visualization.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Click <span style=\" font-style:italic;\">View </span>and if there are any data to show, they will be shown.</li></ol></body></html>",
+                                                           None))
+        self.guideBox.setItemText(self.guideBox.indexOf(self.page_3),
+                                  _translate("guideDialog", u"View Historical Data", None))
+        self.textEdit_6.setHtml(_translate("guideDialog",
+                                                           u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                           "p, li { white-space: pre-wrap; }\n"
+                                                           "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; color:#757575;\">There are </span><span style=\" font-size:12pt; color:#754b4b;\">two ways</span><span style=\" font-size:12pt; color:#757575;\"> of accessing this functionality.</span></p>\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline; color:#757575;\">Method 1</span></p>\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-ri"
+                                                           "ght: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Pose Estimation.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; font-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:normal;\">Search for the patient whose data you want to edit using name/registered Id.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">Edit Patient</span>.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px"
+                                                           "; -qt-block-indent:0; text-indent:0px;\">Edit any required fields and click <span style=\" font-style:italic;\">Save </span>to save data or click <span style=\" font-style:italic;\">Cancel</span> to cancel operation.</li></ol>\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline; color:#757575;\">Method 2</span></p>\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">View Historical Data.</span></li>\n"
+                                                           "<li style=\" font-size:12pt; font-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0;"
+                                                           " text-indent:0px;\"><span style=\" font-style:normal;\">Search for the patient whose data you want to edit using name/registered Id and click </span>View.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select <span style=\" font-style:italic;\">Edit Patient </span>at the bottom of the page.</li>\n"
+                                                           "<li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Edit any required fields and click <span style=\" font-style:italic;\">Save </span>to save data or click <span style=\" font-style:italic;\">Cancel</span> to cancel operation.</li></ol></body></html>",
+                                                           None))
+        self.guideBox.setItemText(self.guideBox.indexOf(self.page_4),
+                                  _translate("guideDialog", u"Edit Patient Data", None))
+        self.textEdit_7.setHtml(_translate("guideDialog",
+                                                           u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                           "p, li { white-space: pre-wrap; }\n"
+                                                           "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; color:#757575;\">You can provide a feedback about the overall system or a feedback on specific pose estimations.</span></p>\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline; color:#757575;\">Provide feedback about the overall system</span></p>\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><"
+                                                           "li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">On the <span style=\" font-style:italic;\">Menu Page</span> select <span style=\" font-style:italic;\">Provide feedback</span>.</li>\n"
+                                                           "<li style=\" font-size:12pt; font-style:italic; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:normal;\">Type the content and click </span>Submit<span style=\" font-style:normal;\"> to save the feedback.</span></li></ol>\n"
+                                                           "<p align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline; color:#757575;\">Provide feedback on specific pose estimations</span></p>\n"
+                                                           "<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; marg"
+                                                           "in-right: 0px; -qt-list-indent: 1;\"><li style=\" font-size:12pt; color:#757575;\" align=\"justify\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When you are viewing a pose estimation, click <span style=\" font-style:italic;\">Provide feedback on this prediction </span>and<span style=\" font-style:italic;\"> </span>in the appearing popup, type the content and click <span style=\" font-style:italic;\">Submit</span> to save it.</li></ol></body></html>",
+                                                           None))
+        self.guideBox.setItemText(self.guideBox.indexOf(self.page),
+                                  _translate("guideDialog", u"Give Feedback", None))
+    # retranslateUi
+

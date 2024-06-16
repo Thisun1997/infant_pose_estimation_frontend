@@ -13,11 +13,13 @@ import numpy as np
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtWidgets import QSizePolicy
 
 from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
 from components.matplotlib_canvas import MatplotlibCanvas
 from components.top_bar import TopBar
+from edit_patient_data_page import EditPatientPage
 from pose_visualization_page import PoseVisualizationPage
 from utils.common_utils import fetch_data, get_prediction, sendPostRequest
 
@@ -180,7 +182,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         else:
             self.selectPatientLabel = QtWidgets.QLabel(self.gridLayoutWidget_2)
             self.selectPatientLabel.setObjectName(u"idLabel")
-            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy = QtWidgets.QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
             sizePolicy.setHeightForWidth(self.selectPatientLabel.sizePolicy().hasHeightForWidth())
@@ -195,8 +197,20 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.comboBox.setObjectName("comboBox")
             self.comboBox.setFont(font)
             self.comboBox.setStyleSheet(u"color:#757575")
-            self.comboBox.currentIndexChanged.connect(self.selection_changed)
+            sizePolicy2 = QtWidgets.QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            sizePolicy2.setHorizontalStretch(0)
+            sizePolicy2.setVerticalStretch(0)
+            sizePolicy2.setHeightForWidth(self.comboBox.sizePolicy().hasHeightForWidth())
+            self.comboBox.setSizePolicy(sizePolicy2)
             self.gridLayout_2.addWidget(self.comboBox, 0, 1, 1, 1)
+            self.comboBox.currentIndexChanged.connect(self.selection_changed)
+            self.editButton = QtWidgets.QPushButton(self.gridLayoutWidget_2)
+            self.editButton.setObjectName(u"editButton")
+            self.editButton.setStyleSheet(u"color:#757575")
+            self.editButton.setFont(font)
+            self.gridLayout_2.addWidget(self.editButton, 0, 2, 1, 1)
+            self.editButton.clicked.connect(self.edit_patient)
+
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -224,6 +238,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.idLabel.setText(_translate("imageUploadPage", "Registration ID"))
         else:
             self.selectPatientLabel.setText(_translate("imageUploadPage", "Select Patient"))
+            self.editButton.setText(_translate("imageUploadPage", "Edit Patient"))
 
     def upload_file_and_display(self):
         try:
@@ -343,3 +358,8 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
 
     def selection_changed(self, i):
         self.registration_id = int(self.comboBox.itemText(i).split("-")[0])
+
+    def edit_patient(self):
+        if self.registration_id:
+            edit_patient_page = EditPatientPage(self.registration_id, self)
+            edit_patient_page.show()
