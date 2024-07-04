@@ -111,7 +111,7 @@ class GuideDialog(QtWidgets.QDialog):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("guideDialog", "Dialog"))
+        self.setWindowTitle(_translate("guideDialog", "Infant Pose Visualizer - Quick Guide"))
         self.textEdit.setHtml(_translate("guideDialog",
                                                          u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                          "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

@@ -167,7 +167,7 @@ class ViewFeedbackPage(QtWidgets.QDialog):
                     if "user" in feedback: user = feedback["user"]
                     if "vis_insertion_id" in feedback:
                         inserted_id = feedback["vis_insertion_id"]
-                        vis_data = fetch_data("patients/visualization_data", {"_id": inserted_id})
+                        vis_data = fetch_data("visualizations/visualization_data", {"_id": inserted_id})
                         data = {
                             "id": vis_data["patient_id"],
                             "depth": vis_data["depth"],

@@ -55,6 +55,7 @@ class HandleErrorMessage:
                 self.gridLayoutWidget_2.setGeometry(QRect(40, 200, 941, 41))
             elif self.objectName() == "poseVisualizationPage":
                 self.saveButton.setGeometry(QtCore.QRect(480, 540, 111, 41))
+                self.backButton.setGeometry(QtCore.QRect(620, 540, 111, 41))
                 self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 210, 941, 41))
                 self.imageLabel.setGeometry(QtCore.QRect(40, 309, 400, 361))
                 self.lineEdit.setGeometry(QtCore.QRect(480, 310, 501, 211))
@@ -95,6 +96,7 @@ class HandleErrorMessage:
                 self.gridLayoutWidget_2.setGeometry(QRect(40, 160, 941, 41))
             elif self.objectName() == "poseVisualizationPage":
                 self.saveButton.setGeometry(QtCore.QRect(480, 500, 111, 41))
+                self.backButton.setGeometry(QtCore.QRect(620, 500, 111, 41))
                 self.gridLayoutWidget_2.setGeometry(QtCore.QRect(40, 170, 941, 41))
                 self.imageLabel.setGeometry(QtCore.QRect(40, 269, 400, 361))
                 self.lineEdit.setGeometry(QtCore.QRect(480, 270, 501, 211))

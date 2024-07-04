@@ -176,7 +176,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
 
     def setValues(self, inserted_id):
         try:
-            vis_data = fetch_data("patients/visualization_data", {"_id": inserted_id})
+            vis_data = fetch_data("visualizations/visualization_data", {"_id": inserted_id})
             patient_id = vis_data["patient_id"]
             self.idLineEdit.setText(str(patient_id))
             patient_data = fetch_data("patients/data", {"_id": patient_id})
@@ -198,7 +198,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             query_data = {
                 "_id": inserted_id,
             }
-            self.handlePutRequest("patients/update", query_data, {"medical_remark": remark})
+            self.handlePutRequest("visualizations/update", query_data, {"medical_remark": remark})
 
     def showFeedbackPage(self, inserted_id):
         feedback_page = FeedbackPage(inserted_id, self)

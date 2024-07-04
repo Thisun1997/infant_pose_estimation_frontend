@@ -330,7 +330,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
         else:
             for modality in self.images:
                 data[modality] = self.images[modality]["np_array"].tolist()
-            response = sendPostRequest("patients/prediction", data)
+            response = sendPostRequest("visualizations/prediction", data)
             if response["code"] != 200:
                 self.displayErrorMessage(True, response["message"])
             else:

@@ -369,7 +369,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
                     "from_time": fromTime.toString("yyyy-MM-dd"),
                     "to_time": toTime.toString("yyyy-MM-dd")
                 }
-                history_data = fetch_data("patients/history_data", query_data)
+                history_data = fetch_data("visualizations/history_data", query_data)
                 if "message" in history_data:
                     self.displayErrorMessage(True, history_data["message"])
                     self.updateScrollAndTextAreas(False, True)
