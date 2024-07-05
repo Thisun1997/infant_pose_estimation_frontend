@@ -62,6 +62,8 @@ class HandleErrorMessage:
                 self.remarkLabel.setGeometry(QtCore.QRect(480, 270, 131, 25))
                 self.visualizationLabel.setGeometry(QtCore.QRect(40, 270, 131, 25))
                 self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 650, 231, 21))
+                self.predictionModelUsedLinkLabel.setGeometry(QtCore.QRect(160, 650, 311, 21))
+                self.predictedByLabel.setGeometry(QtCore.QRect(40, 650, 111, 21))
             elif self.objectName() == "feedbackPage":
                 self.resize(561, 481)
                 self.closeButton.setGeometry(QtCore.QRect(170, 410, 111, 41))
@@ -78,6 +80,9 @@ class HandleErrorMessage:
                 self.closeButton.setGeometry(QtCore.QRect(170, 460, 111, 41))
                 self.saveButton.setGeometry(QtCore.QRect(30, 460, 111, 41))
                 self.widget_2.setGeometry(QtCore.QRect(30, 100, 511, 341))
+            elif self.objectName() == "updateModelPage":
+                self.updateButton.setGeometry(QtCore.QRect(40, 650, 111, 41))
+                self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 200, 991, 441))
         else:
             self.error.setHidden(True)
             if self.objectName() == "LoginPage":
@@ -103,6 +108,8 @@ class HandleErrorMessage:
                 self.remarkLabel.setGeometry(QtCore.QRect(480, 230, 131, 25))
                 self.visualizationLabel.setGeometry(QtCore.QRect(40, 230, 131, 25))
                 self.feedbackLinkLabel.setGeometry(QtCore.QRect(480, 610, 231, 21))
+                self.predictionModelUsedLinkLabel.setGeometry(QtCore.QRect(160, 610, 311, 21))
+                self.predictedByLabel.setGeometry(QtCore.QRect(40, 610, 111, 21))
             elif self.objectName() == "feedbackPage":
                 self.resize(561, 451)
                 self.closeButton.setGeometry(QtCore.QRect(170, 380, 111, 41))
@@ -119,7 +126,9 @@ class HandleErrorMessage:
                 self.closeButton.setGeometry(QtCore.QRect(170, 420, 111, 41))
                 self.saveButton.setGeometry(QtCore.QRect(30, 420, 111, 41))
                 self.widget_2.setGeometry(QtCore.QRect(30, 60, 511, 341))
-
+            elif self.objectName() == "updateModelPage":
+                self.updateButton.setGeometry(QtCore.QRect(40, 610, 111, 41))
+                self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 160, 991, 441))
     def gotoHome(self):
         try:
             # if self.user:
@@ -141,7 +150,9 @@ class HandleErrorMessage:
                 self.parent.setCurrentIndex(i)
                 break
 
-    def handlePutRequest(self, path, query_data, new_field):
+    def handlePutRequest(self, path, query_data, new_field=None):
+        if new_field is None:
+            new_field = {}
         if not has_empty_or_null_value(query_data):
             self.displayErrorMessage(False)
             self.error.setHidden(True)

@@ -19,6 +19,7 @@ from components.dialog_with_guide import DialogWithGuide
 from components.handle_error_message import HandleErrorMessage
 from components.top_bar import TopBar
 from feedback_page import FeedbackPage
+from model_details_page import ModelDetailsPage
 from utils.common_utils import fetch_data
 
 
@@ -28,6 +29,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         super(PoseVisualizationPage, self).__init__(parent)
         self.images = {}
         self.user = user
+        self.model_details = {}
         self.setupUi(inserted_id)
 
     def setupUi(self, inserted_id):
@@ -146,6 +148,22 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             self.feedbackLinkLabel.setStyleSheet("color:rgb(0, 170, 255)")
             self.feedbackLinkLabel.setObjectName("feedbackLinkLabel")
 
+            self.predictedByLabel = QtWidgets.QLabel(self)
+            self.predictedByLabel.setGeometry(QtCore.QRect(40, 610, 111, 21))
+            font = QtGui.QFont()
+            font.setPointSize(11)
+            self.predictedByLabel.setFont(font)
+            self.predictedByLabel.setStyleSheet("color:#757575")
+            self.predictedByLabel.setObjectName("predictionModelUsedLinkLabel")
+
+            self.predictionModelUsedLinkLabel = ClickableLabel(self)
+            self.predictionModelUsedLinkLabel.setGeometry(QtCore.QRect(160, 610, 311, 21))
+            font = QtGui.QFont()
+            font.setPointSize(11)
+            self.predictionModelUsedLinkLabel.setFont(font)
+            self.predictionModelUsedLinkLabel.setStyleSheet("color:#757575")
+            self.predictionModelUsedLinkLabel.setObjectName("predictionModelUsedLinkLabel")
+
             self.addErrorLabel(QRect(40, 170, 201, 21), self)
 
             self.retranslateUi()
@@ -157,6 +175,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             self.saveButton.clicked.connect(lambda: self.save(inserted_id))
             self.backButton.clicked.connect(self.goBack)
             self.feedbackLinkLabel.clicked.connect(lambda: self.showFeedbackPage(inserted_id))
+            self.predictionModelUsedLinkLabel.clicked.connect(self.showModelDetails)
         except Exception as e:
             print(e)
 
@@ -170,6 +189,7 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         self.nameLabel.setText(_translate("poseVisualizationPage", "Name"))
         self.timeLable.setText(_translate("poseVisualizationPage", "Time"))
         self.remarkLabel.setText(_translate("poseVisualizationPage", "Medical remarks"))
+        self.predictedByLabel.setText(_translate("poseVisualizationPage", "<i>Prediction Model: </i>"))
         self.visualizationLabel.setText(_translate("poseVisualizationPage", "Visualization"))
         self.feedbackLinkLabel.setText(
             _translate("poseVisualizationPage", "<i><u>Provide feedback on this prediction</u></i>"))
@@ -189,6 +209,8 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
             print(pixmap.size(), self.imageLabel.size(), scaled_pixmap.size())
             self.imageLabel.setAlignment(Qt.AlignCenter)
             self.imageLabel.setPixmap(scaled_pixmap)
+            self.model_details = fetch_data("model_loader/get_model", {"_id": vis_data["model_id"]})
+            self.predictionModelUsedLinkLabel.setText("<u>"+self.model_details["model_name"]+"</u>")
         except Exception as e:
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
@@ -208,3 +230,8 @@ class PoseVisualizationPage(DialogWithGuide, HandleErrorMessage):
         widget = self.parent.currentWidget()
         self.parent.removeWidget(widget)
         self.parent.setCurrentIndex(self.parent.currentIndex())
+
+    def showModelDetails(self):
+        if self.model_details:
+            model_details_page = ModelDetailsPage(model_details=self.model_details, parent=self)
+            model_details_page.show()

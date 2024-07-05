@@ -6,7 +6,9 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QByteArray, Qt
 from PyQt5.QtGui import QPixmap
 
+from components.clickable_label import ClickableLabel
 from components.matplotlib_canvas import MatplotlibCanvas
+from model_details_page import ModelDetailsPage
 
 
 class SpecificFeedbackView(QtWidgets.QWidget):
@@ -102,6 +104,26 @@ class SpecificFeedbackView(QtWidgets.QWidget):
             self.userLineEdit.setStyleSheet("color:#757575")
             self.userLineEdit.setObjectName("userLineEdit")
             self.gridLayout_7.addWidget(self.userLineEdit, 3, 1, 1, 1)
+            self.modelLabel = QtWidgets.QLabel(self.gridLayoutWidget_6)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.modelLabel.sizePolicy().hasHeightForWidth())
+            self.modelLabel.setSizePolicy(sizePolicy)
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            self.modelLabel.setFont(font)
+            self.modelLabel.setStyleSheet("color:#757575")
+            self.modelLabel.setObjectName("modelLabel")
+            self.gridLayout_7.addWidget(self.modelLabel, 4, 0, 1, 1)
+            self.modelNameLabel = ClickableLabel(self.gridLayoutWidget_6)
+            self.modelNameLabel.setSizePolicy(sizePolicy)
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            self.modelNameLabel.setFont(font)
+            self.modelNameLabel.setStyleSheet("color:#757575")
+            self.modelNameLabel.setObjectName("modelNameLabel")
+            self.gridLayout_7.addWidget(self.modelNameLabel, 4, 1, 1, 1)
 
 
             ###added
@@ -155,6 +177,8 @@ class SpecificFeedbackView(QtWidgets.QWidget):
             self.outputLabel.setObjectName("outputLabel")
             self.retranslateUi()
             self.setValues()
+
+
         except Exception as e:
             print(e)
 
@@ -167,6 +191,7 @@ class SpecificFeedbackView(QtWidgets.QWidget):
         self.depthImageLabel.setText(_translate("viewFeedbackPage", "Depth Image"))
         self.pressureImageLabel.setText(_translate("viewFeedbackPage", "Pressure Image"))
         self.outputLabel.setText(_translate("viewFeedbackPage", "Pose Estimation"))
+        self.modelLabel.setText(_translate("viewFeedbackPage", "Model"))
 
     def setValues(self):
         data = self.data
@@ -194,3 +219,14 @@ class SpecificFeedbackView(QtWidgets.QWidget):
         scaled_pixmap = pixmap.scaled(self.outputImage.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.outputImage.setAlignment(Qt.AlignCenter)
         self.outputImage.setPixmap(scaled_pixmap)
+
+        if data["model_data"]:
+            self.modelNameLabel.setText("<u>" + data["model_data"]["model_name"] + "</u>")
+            self.modelNameLabel.clicked.connect(lambda: self.showModelDetails(data["model_data"]))
+        else:
+            self.modelNameLabel.setText("-")
+
+    def showModelDetails(self, model_details):
+        if model_details:
+            model_details_page = ModelDetailsPage(model_details=model_details, parent=self)
+            model_details_page.show()

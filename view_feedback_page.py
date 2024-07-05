@@ -13,13 +13,14 @@ from PyQt5.QtCore import Qt, QStringListModel
 from PyQt5.QtWidgets import QSizePolicy
 
 from components.general_feedback_widget import CustomWidget
+from components.handle_error_message import HandleErrorMessage
 from components.specific_feedback_widget import SpecificFeedbackView
 from components.top_bar import TopBar
 from utils.common_utils import fetch_data
 import time
 
 
-class ViewFeedbackPage(QtWidgets.QDialog):
+class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
     def __init__(self, parent, user):
         super().__init__()
         self.parent = parent
@@ -137,24 +138,6 @@ class ViewFeedbackPage(QtWidgets.QDialog):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.specificFeedback),
                                   _translate("viewFeedbackPage", "Input Specific Feedabcks"))
 
-    def gotoHome(self):
-        if self.user:
-            self.user = None
-        i = self.parent.count()-1
-        while self.parent.count() > 1:
-            widget = self.parent.widget(i)
-            print(widget.objectName())
-            self.parent.removeWidget(widget)
-            i -= 1
-        self.parent.setCurrentIndex(0)
-
-    def goToMenu(self):
-        for i in range(self.parent.count()):
-            widget = self.parent.widget(i)
-            if widget.objectName() == "menuPage":
-                self.parent.setCurrentIndex(i)
-                break
-
     def setValues(self):
         try:
             data = fetch_data("feedback/")
@@ -168,6 +151,9 @@ class ViewFeedbackPage(QtWidgets.QDialog):
                     if "vis_insertion_id" in feedback:
                         inserted_id = feedback["vis_insertion_id"]
                         vis_data = fetch_data("visualizations/visualization_data", {"_id": inserted_id})
+                        model_data = None
+                        if "model_id" in vis_data:
+                            model_data = fetch_data("model_loader/get_model", {"_id": vis_data["model_id"]})
                         data = {
                             "id": vis_data["patient_id"],
                             "depth": vis_data["depth"],
@@ -175,7 +161,8 @@ class ViewFeedbackPage(QtWidgets.QDialog):
                             "time": time_,
                             "visualization": vis_data["visualization"],
                             "feedback": feedback["feedback"],
-                            "user": user
+                            "user": user,
+                            "model_data": model_data
                         }
                         feedbackWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
                         feedbackWidget.setMinimumSize(QtCore.QSize(890, 250))

@@ -242,7 +242,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
 
     def upload_file_and_display(self):
         try:
-            folderPath = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+            folderPath = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder', 'D:/IIT/academic/Final_project/inputs')
             if folderPath:
                 error_message = self.isValidFiles(folderPath)
                 if error_message:

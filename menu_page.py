@@ -16,6 +16,7 @@ from components.top_bar import TopBar
 from feedback_page import FeedbackPage
 from image_load_page import ImageUploadPage
 from patient_registration_page import PatientRegistrationPage
+from update_model_page import UpdateModelPage
 from view_feedback_page import ViewFeedbackPage
 from view_history_page import ViewHistoryPage
 
@@ -112,7 +113,7 @@ class MenuPage(DialogWithGuide):
             self.loginFormLayout.setWidget(0, QtWidgets.QFormLayout.SpanningRole, self.updateModelButton)
 
             self.viewFeedbackButton.clicked.connect(self.gotoFeedbackView)
-            # self.updateModelButton.clicked.connect(self.gotoModelUpdate)
+            self.updateModelButton.clicked.connect(self.gotoUpdateModelView)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -166,4 +167,9 @@ class MenuPage(DialogWithGuide):
     def gotoFeedbackView(self):
         feedback_view_page = ViewFeedbackPage(self.parent, self.user)
         self.parent.addWidget(feedback_view_page)
+        self.parent.setCurrentIndex(self.parent.count() - 1)
+
+    def gotoUpdateModelView(self):
+        update_model_page = UpdateModelPage(self.parent, self.user)
+        self.parent.addWidget(update_model_page)
         self.parent.setCurrentIndex(self.parent.count() - 1)
