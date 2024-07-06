@@ -261,6 +261,10 @@ class EditPatientPage(QtWidgets.QDialog, HandleErrorMessage):
                 self.handlePutRequest("patients/update_data", query_data, update_data)
                 if self.error.text() == "Record updated successfully":
                     self.dataEntered.emit(guardian, contact_number, address)
-                    self.accept()
+                    # Set up a QTimer to call self.accept() after a delay
+                    self.timer = QtCore.QTimer(self)
+                    self.timer.setSingleShot(True)
+                    self.timer.timeout.connect(self.accept)
+                    self.timer.start(1000)
             else:
                 self.displayErrorMessage(True, "Inputs marked with * are required")

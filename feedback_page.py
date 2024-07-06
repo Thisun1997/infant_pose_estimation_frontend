@@ -96,6 +96,14 @@ class FeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
             if response:
                 self.error.setStyleSheet(u"color: rgb(0, 234, 0)")
                 self.displayErrorMessage(True, response)
+                # Set up a QTimer to call self.accept() after a delay
+                self.timer = QtCore.QTimer(self)
+                self.timer.setSingleShot(True)
+                self.timer.timeout.connect(self.accept)
+                self.timer.start(1000)
+        else:
+            self.displayErrorMessage(True, "Feedback is empty")
+
 
 
 

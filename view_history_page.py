@@ -305,6 +305,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             self.editButton.setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 170, 255)")
             self.editButton.setGeometry(QtCore.QRect(230, 300, 90, 31))
             self.editButton.clicked.connect(self.edit_patient)
+            self.editButton.setEnabled(False)
 
             self.retranslateUi()
             QtCore.QMetaObject.connectSlotsByName(self)
@@ -349,6 +350,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
 
     def viewData(self):
         try:
+            self.editButton.setEnabled(True)
             self.displayErrorMessage(False)
             # if self.gridLayout_4.count() > 0:
             self.clearScrollArea()
@@ -384,8 +386,8 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
                         widget.setAutoFillBackground(False)
                         widget.setStyleSheet("background-color:rgb(255, 255, 255)")
                         widget.setObjectName("widget")
-                        widget.setMinimumSize(QtCore.QSize(581, 250))
-                        widget.setMaximumSize(QtCore.QSize(581, 250))
+                        widget.setMinimumSize(QtCore.QSize(581, 350))
+                        widget.setMaximumSize(QtCore.QSize(581, 350))
                         HistoryView(widget, history_data[i])
                         self.gridLayout_4.addWidget(widget, i + 1, 0, 1, 1)
                         self.widget_list.append(widget)

@@ -15,11 +15,11 @@ class HistoryView(QtWidgets.QWidget):
 
     def setupUi(self):
         self.showImageLabel = QtWidgets.QLabel(self.parent)
-        self.showImageLabel.setGeometry(QtCore.QRect(10, 10, 250, 235))
+        self.showImageLabel.setGeometry(QtCore.QRect(10, 10, 250, 250))
         self.showImageLabel.setText("")
         self.showImageLabel.setObjectName("showImageLabel")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.parent)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(260, 10, 311, 235))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(260, 10, 311, 300))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
