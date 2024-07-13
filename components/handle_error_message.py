@@ -76,6 +76,7 @@ class HandleErrorMessage:
                 self.scrollArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
                 self.textArea.setGeometry(QtCore.QRect(40, 330, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 330, 331, 331))
+                self.recordCountLabel.setGeometry(QtCore.QRect(140, 300, 141, 16))
             elif self.objectName() == "EditPatientPage":
                 self.closeButton.setGeometry(QtCore.QRect(170, 460, 111, 41))
                 self.saveButton.setGeometry(QtCore.QRect(30, 460, 111, 41))
@@ -122,6 +123,7 @@ class HandleErrorMessage:
                 self.scrollArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
                 self.textArea.setGeometry(QtCore.QRect(40, 290, 630, 390))
                 self.widget_2.setGeometry(QtCore.QRect(680, 290, 331, 331))
+                self.recordCountLabel.setGeometry(QtCore.QRect(140, 260, 141, 16))
             elif self.objectName() == "EditPatientPage":
                 self.closeButton.setGeometry(QtCore.QRect(170, 420, 111, 41))
                 self.saveButton.setGeometry(QtCore.QRect(30, 420, 111, 41))

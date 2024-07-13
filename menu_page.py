@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from components.clickable_label import ClickableLabel
 from components.dialog_with_guide import DialogWithGuide
@@ -165,6 +166,7 @@ class MenuPage(DialogWithGuide):
         feedback_page.show()
 
     def gotoFeedbackView(self):
+        QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
         feedback_view_page = ViewFeedbackPage(self.parent, self.user)
         self.parent.addWidget(feedback_view_page)
         self.parent.setCurrentIndex(self.parent.count() - 1)

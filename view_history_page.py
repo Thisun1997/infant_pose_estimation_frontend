@@ -306,6 +306,14 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             self.editButton.setGeometry(QtCore.QRect(230, 300, 90, 31))
             self.editButton.clicked.connect(self.edit_patient)
             self.editButton.setEnabled(False)
+            self.recordCountLabel = QtWidgets.QLabel(self)
+            self.recordCountLabel.setGeometry(QtCore.QRect(140, 260, 141, 16))
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            self.recordCountLabel.setFont(font)
+            self.recordCountLabel.setStyleSheet("color:#757575")
+            self.recordCountLabel.setObjectName("recordCountLabel")
+            self.recordCountLabel.setVisible(False)
 
             self.retranslateUi()
             QtCore.QMetaObject.connectSlotsByName(self)
@@ -355,6 +363,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
             # if self.gridLayout_4.count() > 0:
             self.clearScrollArea()
             self.clearFields()
+            QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
             fromTime = self.fromDateEdit.date()
             toTime = self.toDateEdit.date()
             if self.selected_patient_id:
@@ -373,12 +382,16 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
                 }
                 history_data = fetch_data("visualizations/history_data", query_data)
                 if "message" in history_data:
+                    self.recordCountLabel.setVisible(False)
                     self.displayErrorMessage(True, history_data["message"])
                     self.updateScrollAndTextAreas(False, True)
                 else:
                     self.updateScrollAndTextAreas(True,False)
+                    records = "Records"
+                    if len(history_data) == 1: records = "Record"
+                    self.recordCountLabel.setText(str(len(history_data)) + " " + records + " fetched.")
+                    self.recordCountLabel.setVisible(True)
                     for i in range(len(history_data)):
-                        print(history_data[i]["_id"])
                         feedback_data = fetch_data("feedback/get", {"vis_insertion_id": history_data[i]["_id"]["$oid"]})
                         history_data[i]["feedback"] = feedback_data["message"]
                         widget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
@@ -396,6 +409,7 @@ class ViewHistoryPage(DialogWithGuide, HandleErrorMessage):
         except Exception as e:
             self.updateScrollAndTextAreas(False, True)
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
+        QtWidgets.QApplication.restoreOverrideCursor()
 
     def clearScrollArea(self):
         self.updateScrollAndTextAreas(False,True, True)

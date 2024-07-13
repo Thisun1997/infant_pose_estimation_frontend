@@ -317,6 +317,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             self.displayErrorMessage(True, "Error fetching data: " + str(e))
 
     def process_images(self):
+        QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
         now_time = time.time_ns()
         data = {
             "patient_id": self.registration_id,
@@ -331,6 +332,7 @@ class ImageUploadPage(DialogWithGuide, HandleErrorMessage):
             for modality in self.images:
                 data[modality] = self.images[modality]["np_array"].tolist()
             response = sendPostRequest("visualizations/prediction", data)
+            QtWidgets.QApplication.restoreOverrideCursor()
             if response["code"] != 200:
                 self.displayErrorMessage(True, response["message"])
             else:

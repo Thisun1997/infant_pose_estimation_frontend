@@ -25,6 +25,7 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
         super().__init__()
         self.parent = parent
         self.user = user
+        self.record_counts = []
         self.setupUi()
 
     def setupUi(self):
@@ -113,6 +114,17 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
             self.specifictextArea.wordWrap()
             self.specifictextArea.setVisible(True)
             self.tabWidget.addTab(self.specificFeedback, "")
+            font = QtGui.QFont()
+            font.setPointSize(10)
+            self.recordCountLabel = QtWidgets.QLabel(self)
+            self.recordCountLabel.setObjectName(u"label_2")
+            self.recordCountLabel.setGeometry(QtCore.QRect(846, 700, 151, 20))
+            self.recordCountLabel.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+            self.recordCountLabel.setVisible(False)
+            self.recordCountLabel.setStyleSheet("color:#757575")
+            self.recordCountLabel.setFont(font)
+
+            self.tabWidget.currentChanged.connect(self.on_tab_changed)
 
             self.topBar.loginButton.clicked.connect(self.gotoHome)
             self.topBar.menuButton.clicked.connect(self.goToMenu)
@@ -122,6 +134,7 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
             QtCore.QMetaObject.connectSlotsByName(self)
 
             self.setValues()
+            QtWidgets.QApplication.restoreOverrideCursor()
         except Exception as e:
             print(e)
 
@@ -143,6 +156,8 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
             data = fetch_data("feedback/")
             i = 0
             if len(data) > 0:
+                general_count = 0
+                specific_count = 0
                 for feedback in data:
                     time_ = "N/A"
                     user = "N/A"
@@ -176,6 +191,7 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
                         self.gridLayout_4.addWidget(feedbackWidget, i + 1, 0, 1, 1)
                         self.gridLayout_4.addWidget(horizontal_line, i + 2, 0, 1, 1)
                         i += 2
+                        specific_count += 1
                     else:
                         item = QtWidgets.QListWidgetItem(self.listWidget)
                         custom_widget = CustomWidget([f"Submitted Time - {time_}",
@@ -183,6 +199,7 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
                                                       f"Feedback - {feedback['feedback']}"])
                         item.setSizeHint(custom_widget.sizeHint())
                         self.listWidget.setItemWidget(item, custom_widget)
+                        general_count += 1
                 if i > 0:
                     self.scrollAreaWidgetContents.adjustSize()
                     self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -191,6 +208,8 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
                 if self.listWidget.count() > 0:
                     self.listWidget.setVisible(True)
                     self.generaltextArea.setVisible(False)
+                    self.show_record_count(general_count)
+                self.record_counts = [general_count, specific_count]
         except Exception as e:
             self.listWidget.setVisible(False)
             self.generaltextArea.setVisible(True)
@@ -198,3 +217,16 @@ class ViewFeedbackPage(QtWidgets.QDialog, HandleErrorMessage):
             self.specifictextArea.setVisible(True)
             self.generaltextArea.setText(f"Error: {str(e)}")
             self.specifictextArea.setText(f"Error: {str(e)}")
+            self.recordCountLabel.setVisible(False)
+
+    def on_tab_changed(self, index):
+        # Update the label text based on the active tab
+        record_count = self.record_counts[index]
+        self.show_record_count(record_count)
+
+    def show_record_count(self, record_count):
+        if record_count > 0 :
+            records = "Records"
+            if record_count == 1: records = "Record"
+            self.recordCountLabel.setText(f"{str(record_count)} {records} fetched")
+            self.recordCountLabel.setVisible(True)
