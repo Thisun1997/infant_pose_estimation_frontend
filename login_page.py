@@ -135,7 +135,7 @@ class LoginPage(QtWidgets.QDialog, HandleErrorMessage):
             "password": password,
             "user_type": user_type
         }
-        print(data)
+
         if self.handlePostRequest("users/auth", data):
             user = User(username, user_type)
             self.stack_menu_page(user)
