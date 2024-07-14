@@ -188,7 +188,9 @@ class PatientRegistrationPage(DialogWithGuide, HandleErrorMessage):
             # "admitted_reason" : admitted_reason,
         }
         response = self.handlePostRequest("patients/registration", data, True)
-        if response:self.show_popup(response)
+        if response:
+            self.show_popup(response)
+            self.registerButton.setEnabled(False)
 
     def show_popup(self, response):
         popup = RegistrationSuccessPopup(response, self.user, self)
