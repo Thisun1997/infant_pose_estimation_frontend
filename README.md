@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/thisun1997/infant_pose_estimation_frontend/badge)](https://www.codefactor.io/repository/github/thisun1997/infant_pose_estimation_frontend)    [![CodeQL](https://github.com/Thisun1997/infant_pose_estimation_frontend/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Thisun1997/infant_pose_estimation_frontend/actions/workflows/github-code-scanning/codeql)
+
 <h1>Introduction</h1>
 
 This codebase contains the frontend GUIs implementation of the Infant Pose Visualizer application. PyQT5 framework is used for the development.
