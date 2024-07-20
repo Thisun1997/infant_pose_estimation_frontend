@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from components.handle_error_message import HandleErrorMessage
 from components.top_bar import TopBar
@@ -203,6 +204,7 @@ class UpdateModelPage(QtWidgets.QDialog, HandleErrorMessage):
         self.selectModelTextEdit.setHtml(self.inactive_models[self.selected_model_id])
 
     def updateModel(self):
+        QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
         if self.selected_model_id and self.active_model_id:
             data = {
                 "activate_id" : self.selected_model_id,
@@ -211,4 +213,5 @@ class UpdateModelPage(QtWidgets.QDialog, HandleErrorMessage):
             self.handlePutRequest("model_loader/update_model", data)
         else:
             self.displayErrorMessage(True, "Model(s) are not selected")
+        QtWidgets.QApplication.restoreOverrideCursor()
 
